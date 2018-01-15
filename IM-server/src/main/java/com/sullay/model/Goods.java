@@ -1,0 +1,94 @@
+package com.sullay.model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+//商品类
+@Entity
+public class Goods {
+	@Id
+	@GeneratedValue
+	private Integer id;
+	//商品编码（不包括前缀）
+	@Column(unique=true,nullable=false)
+	private String code;
+	//商品编码
+	@Column(unique=true,nullable=false)
+	private String fCode;
+	//商品名称
+	private String name;
+	//商品规格
+	private String specification;
+	//商品种类
+	@ManyToOne
+	@JoinColumn(name="Tid")
+	private GoodsType goodsType;
+	//库存单位
+	@ManyToOne
+	@JoinColumn(name="Uid")
+	private Unit unit;
+	//品牌
+	private String brand;
+	//商品单价
+	private	Double price;
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
+	}
+	public String getfCode() {
+		return fCode;
+	}
+	public void setfCode(String fCode) {
+		this.fCode = fCode;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getSpecification() {
+		return specification;
+	}
+	public void setSpecification(String specification) {
+		this.specification = specification;
+	}
+	public GoodsType getGoodsType() {
+		return goodsType;
+	}
+	public void setGoodsType(GoodsType goodsType) {
+		this.goodsType = goodsType;
+	}
+	public Unit getUnit() {
+		return unit;
+	}
+	public void setUnit(Unit unit) {
+		this.unit = unit;
+	}
+	public String getBrand() {
+		return brand;
+	}
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+	public Double getPrice() {
+		return price;
+	}
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+	
+}
