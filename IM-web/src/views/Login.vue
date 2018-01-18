@@ -3,7 +3,7 @@
            label-width="0px" v-loading="loading" ref="loginForm">
     <h3 class="login_title">系统登录</h3>
     <el-form-item prop="username">
-      <el-input type="text" v-model="loginForm.username" placeholder="账号"></el-input>
+      <el-input type="text" v-model="loginForm.username" placeholder="账号" autofocus="true"></el-input>
     </el-form-item>
     <el-form-item prop="password">
       <el-input type="password" v-model="loginForm.password" placeholder="密码"></el-input>
@@ -14,6 +14,8 @@
   </el-form>
 </template>
 <script>
+  import {postRequest} from '../utils/axios'
+  import cookies from '../utils/cookies'
   export default{
     data () {
       return {
@@ -22,19 +24,39 @@
           password: [{required: true, message: '请输入密码', trigger: 'blur'}]
         },
         loginForm: {
-          username: 'aaa',
-          password: 'aaa'
+          username: '',
+          password: ''
         },
         loading: false
+      }
+    },
+    created () {
+      this.loginForm.username = cookies.getCookie('username')
+      this.loginForm.password = cookies.getCookie('password')
+      document.onkeyup = () => {
+        if (window.event.keyCode === 13) {
+          this.submitClick()
+        }
       }
     },
     methods: {
       submitClick () {
         this.$refs.loginForm.validate((valid) => {
           if (valid) {
-            alert('submit!')
+            this.loading = true
+            postRequest('/login', this.loginForm)
+              .then(resp => {
+                this.loading = false
+                cookies.setCookie('username', this.loginForm.username, 3)
+                cookies.setCookie('password', this.loginForm.password, 3)
+                window.location.href = 'http://localhost:4001/'
+              })
+              .catch(error => {
+                this.loading = false
+                console.log(error)
+                this.$message.error('登录失败')
+              })
           } else {
-            console.log('error submit!!')
             return false
           }
         })
