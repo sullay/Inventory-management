@@ -49,7 +49,7 @@
                 this.loading = false
                 cookies.setCookie('username', this.loginForm.username, 3)
                 cookies.setCookie('password', this.loginForm.password, 3)
-                window.location.href = 'http://localhost:4001/'
+                window.location.href = '/'
               })
               .catch(error => {
                 this.loading = false

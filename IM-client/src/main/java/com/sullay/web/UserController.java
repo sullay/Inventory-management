@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UserController {
 	@RequestMapping("/")
 	public String index() {
-		return "/hello.html";
+		return "/index.html";
 	}
 	@RequestMapping("/login_page")
 	public String loginPage() {
