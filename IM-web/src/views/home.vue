@@ -3,7 +3,7 @@
   <el-header><Header></Header></el-header>
   <el-container>
     <el-aside width="150px"><SideBar></SideBar></el-aside>
-    <el-main>Main</el-main>
+    <el-main><router-view/></el-main>
   </el-container>
 </el-container>
 </template>
