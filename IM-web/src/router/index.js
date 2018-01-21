@@ -6,6 +6,10 @@ import Unit from '../views/base/unit.vue'
 import Warehouse from '../views/base/warehouse.vue'
 import GoodsType from '../views/base/goodsType.vue'
 import Goods from '../views/base/goods.vue'
+import purchaseReceipt from '../views/purchase/receipt.vue'
+import purchaseDelivery from '../views/purchase/delivery.vue'
+import saleReceipt from '../views/sale/receipt.vue'
+import saleDelivery from '../views/sale/delivery.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -28,7 +32,7 @@ export default new Router({
       },
       children: [
         {
-          path: '/home/documents',
+          path: '/home/base/documents',
           name: '单据信息',
           component: Documents,
           meta: {
@@ -36,7 +40,7 @@ export default new Router({
           }
         },
         {
-          path: '/home/unit',
+          path: '/home/base/unit',
           name: '单位设置',
           component: Unit,
           meta: {
@@ -44,7 +48,7 @@ export default new Router({
           }
         },
         {
-          path: '/home/warehouse',
+          path: '/home/base/warehouse',
           name: '仓库信息',
           component: Warehouse,
           meta: {
@@ -52,7 +56,7 @@ export default new Router({
           }
         },
         {
-          path: '/home/goodsType',
+          path: '/home/base/goodsType',
           name: '货物类别',
           component: GoodsType,
           meta: {
@@ -60,7 +64,7 @@ export default new Router({
           }
         },
         {
-          path: '/home/goods',
+          path: '/home/base/goods',
           name: '货物信息',
           component: Goods,
           meta: {
@@ -68,7 +72,58 @@ export default new Router({
           }
         }
       ]
+    },
+    {
+      path: '/home',
+      name: '采购单据',
+      component: Home,
+      meta: {
+        index: '2'
+      },
+      children: [
+        {
+          path: '/home/purchase/receipt',
+          name: '采购入库单',
+          component: purchaseReceipt,
+          meta: {
+            index: '2-1'
+          }
+        },
+        {
+          path: '/home/purchase/delivery',
+          name: '采购出库单',
+          component: purchaseDelivery,
+          meta: {
+            index: '2-2'
+          }
+        }
+      ]
+    },
+    {
+      path: '/home',
+      name: '销售单据',
+      component: Home,
+      meta: {
+        index: '3'
+      },
+      children: [
+        {
+          path: '/home/sale/receipt',
+          name: '销售入库单',
+          component: saleReceipt,
+          meta: {
+            index: '3-1'
+          }
+        },
+        {
+          path: '/home/sale/delivery',
+          name: '销售出库单',
+          component: saleDelivery,
+          meta: {
+            index: '3-2'
+          }
+        }
+      ]
     }
-
   ]
 })

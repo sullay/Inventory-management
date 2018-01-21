@@ -3,17 +3,22 @@
   <el-header><Header></Header></el-header>
   <el-container>
     <el-aside width="150px"><SideBar></SideBar></el-aside>
-    <el-main><router-view/></el-main>
+    <el-main>
+      <HomeMain v-if="this.$route.path=='/home'"></HomeMain>
+      <router-view v-else/>
+    </el-main>
   </el-container>
 </el-container>
 </template>
 <script>
 import Header from '../components/header'
 import SideBar from '../components/sideBar'
+import HomeMain from '../components/homeMain'
 export default {
   components: {
     Header,
-    SideBar
+    SideBar,
+    HomeMain
   }
 }
 </script>

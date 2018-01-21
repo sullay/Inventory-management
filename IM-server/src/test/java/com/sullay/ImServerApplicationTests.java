@@ -68,7 +68,6 @@ public class ImServerApplicationTests {
 		Goods goods=new Goods();
 		goods.setGoodsType(goodsTypeRepository.findOne(1));
 		goods.setCode("23456");
-		goods.setfCode(goods.getGoodsType().getCodingPrefix()+goods.getCode());
 		goods.setBrand("xxx");
 		goods.setName("xxx");
 		goods.setPrice(10.0);

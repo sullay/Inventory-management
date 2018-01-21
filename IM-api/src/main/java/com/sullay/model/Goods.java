@@ -6,8 +6,6 @@ public class Goods {
 	private Integer id;
 	//商品编码（不包括前缀）
 	private String code;
-	//商品编码
-	private String fCode;
 	//商品名称
 	private String name;
 	//商品规格
@@ -32,12 +30,6 @@ public class Goods {
 	}
 	public void setCode(String code) {
 		this.code = code;
-	}
-	public String getfCode() {
-		return fCode;
-	}
-	public void setfCode(String fCode) {
-		this.fCode = fCode;
 	}
 	public String getName() {
 		return name;

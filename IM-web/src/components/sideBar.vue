@@ -1,7 +1,7 @@
 <template>
 <div>
 <el-menu  class="el-menu-vertical-demo">
-
+    <el-menu-item index="0"><router-link to="/home">首页</router-link></el-menu-item>
     <el-submenu :index="route.meta.index" v-for="route in router" :key='route.meta.index'>
        <template slot="title">
           <span>{{route.name}}</span>
@@ -19,10 +19,15 @@
     text-align: left;
   }
   a {
+    width: 150px;
+    text-align: left;
     text-decoration: none;
     color: black;
+    display: block;
   }
   .router-link-active {
+    width: 150px;
+    text-align: left;
     text-decoration: none;
   }
 </style>
