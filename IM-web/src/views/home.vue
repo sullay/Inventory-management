@@ -2,7 +2,7 @@
   <el-container>
   <el-header><Header></Header></el-header>
   <el-container>
-    <el-aside width="150px"><SideBar></SideBar></el-aside>
+    <el-aside width="160px"><div class="noScroll"><SideBar></SideBar></div></el-aside>
     <el-main>
       <HomeMain v-if="this.$route.path=='/home'"></HomeMain>
       <router-view v-else/>
@@ -32,15 +32,22 @@ export default {
   }
   
   .el-aside {
-    text-align: center;
+    text-align: left;
+    overflow-x: hidden;
+    overflow-y: hidden;
   }
   
   .el-main {
     text-align: center;
   }
-  .el-container{
+  .el-container {
       height: 100%;
       width: 100%;
   }
-  
+  .noScroll{
+    width: 180px;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
 </style>

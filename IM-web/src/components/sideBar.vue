@@ -9,25 +9,25 @@
       <el-menu-item :index="item.meta.index" v-for="item in route.children" :key="item.meta.index"><router-link :to="item.path">{{item.name}}</router-link></el-menu-item>
     </el-submenu>
 </el-menu>
-  </div>
+</div>
 </template>
 
 <style scoped>
+  div {
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
   .el-menu-vertical-demo:not(.el-menu--collapse) {
-    width: 150px;
-    min-height: 400px;
+    width: 160px;
     text-align: left;
   }
   a {
-    width: 150px;
-    text-align: left;
+    display: block;
     text-decoration: none;
     color: black;
-    display: block;
   }
   .router-link-active {
-    width: 150px;
-    text-align: left;
+    display: block;
     text-decoration: none;
   }
 </style>
@@ -44,14 +44,6 @@
         if (typeof (this.$router.options.routes[route].children) !== 'undefined') {
           this.router.push(this.$router.options.routes[route])
         }
-      }
-    },
-    methods: {
-      handleOpen (key, keyPath) {
-        console.log(key, keyPath)
-      },
-      handleClose (key, keyPath) {
-        console.log(key, keyPath)
       }
     }
   }
