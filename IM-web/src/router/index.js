@@ -140,17 +140,17 @@ export default new Router({
           }
         },
         {
-          path: '/home/sale/receipt',
-          name: '销售入库单',
-          component: SaleReceipt,
+          path: '/home/sale/delivery',
+          name: '销售出库单',
+          component: SaleDelivery,
           meta: {
             index: '3-2'
           }
         },
         {
-          path: '/home/sale/delivery',
-          name: '销售出库单',
-          component: SaleDelivery,
+          path: '/home/sale/receipt',
+          name: '销售退货单',
+          component: SaleReceipt,
           meta: {
             index: '3-3'
           }
@@ -174,17 +174,17 @@ export default new Router({
           }
         },
         {
-          path: '/home/other/inReceipt',
+          path: '/home/other/inDelivery',
           name: '内部领用单',
-          component: InReceipt,
+          component: InDelivery,
           meta: {
             index: '4-2'
           }
         },
         {
-          path: '/home/other/inDelivery',
+          path: '/home/other/inReceipt',
           name: '内部反退单',
-          component: InDelivery,
+          component: InReceipt,
           meta: {
             index: '4-3'
           }

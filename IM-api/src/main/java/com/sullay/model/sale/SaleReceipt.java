@@ -1,38 +1,22 @@
-package com.sullay.model.purchase;
+package com.sullay.model.sale;
 
 import java.util.Date;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-
 import com.sullay.model.Water;
 
-//采购入库单
-@Entity
-public class PurchaseReceipt {
-	@Id
-	@GeneratedValue
+//销售退货单
+public class SaleReceipt {
 	private Integer id;
-	//入库单号
+	//退货入库单号
 	private String code;
-	//采购订单
-	@ManyToOne
-	@JoinColumn(name="Pid")
-	private PurchaseOrder purchaseOrder;
+	//销售订单
+	private SaleOrder saleOrder;
 	//备注
 	private String extend;
 	//单据日期
 	private Date date;
 	//库存流水账
-	@OneToMany(cascade= {CascadeType.ALL},fetch=FetchType.EAGER)
-	@JoinColumn(name="PurchaseReceipt_id")
 	private Set<Water> waters;
 	public Integer getId() {
 		return id;
@@ -46,11 +30,11 @@ public class PurchaseReceipt {
 	public void setCode(String code) {
 		this.code = code;
 	}
-	public PurchaseOrder getPurchaseOrder() {
-		return purchaseOrder;
+	public SaleOrder getSaleOrder() {
+		return saleOrder;
 	}
-	public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
-		this.purchaseOrder = purchaseOrder;
+	public void setSaleOrder(SaleOrder saleOrder) {
+		this.saleOrder = saleOrder;
 	}
 	public String getExtend() {
 		return extend;
@@ -70,5 +54,6 @@ public class PurchaseReceipt {
 	public void setWaters(Set<Water> waters) {
 		this.waters = waters;
 	}
+	
 	
 }

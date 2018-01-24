@@ -1,22 +1,23 @@
-package com.sullay.Client;
+package com.sullay.client;
 
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.sullay.model.Goods;
 import com.sullay.model.Msg;
-import com.sullay.model.Warehouse;
 
-@FeignClient("IM-server")
-@RequestMapping("/warehouse")
-public interface WarehouseClient {
+@FeignClient("IM-service")
+@RequestMapping("/goods")
+public interface GoodsClient {
 	@RequestMapping(value="/",method=RequestMethod.POST)
-	public void create(@RequestBody Warehouse warehouse);
+	public void create(@RequestBody Goods goods);
 	@RequestMapping(value="/",method=RequestMethod.DELETE)
-	public void detele(@RequestBody Warehouse warehouse);
+	public void detele(@RequestBody Goods goods);
 	@RequestMapping(value="/",method=RequestMethod.PUT)
-	public void update(@RequestBody Warehouse warehouse);
+	public void update(@RequestBody Goods goods);
 	@RequestMapping(value="/all",method=RequestMethod.GET)
-	public Msg findAll(int page,int size);
+	public Msg findAll(@RequestParam("page")int page,@RequestParam("size")int size);
 }

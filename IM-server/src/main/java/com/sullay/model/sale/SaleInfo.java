@@ -1,4 +1,4 @@
-package com.sullay.model.purchase;
+package com.sullay.model.sale;
 
 import java.util.Date;
 
@@ -11,30 +11,30 @@ import javax.persistence.ManyToOne;
 
 import com.sullay.model.Goods;
 
-//采购信息
+//销售信息
 @Entity
-public class PurchaseInfo {
+public class SaleInfo {
 	@Id
 	@GeneratedValue
 	private Integer id;
-	//采购商品
+	//销售商品
 	@ManyToOne
 	@JoinColumn(name="Gid")
 	private Goods goods;
 	//订单数量
 	private int number;
-	//到货数量
-	private int arrivals;
-	//采购价格
+	//出货数量
+	private int shipment;
+	//销售价格
 	private double price;
 	//到货日期
 	private Date date;
 	//备注
 	private String extend;
-	//采购订单
+	//销售订单
 	@ManyToOne(cascade= {CascadeType.ALL})
-	@JoinColumn(name="Pid")
-	private PurchaseOrder purchaseOrder;
+	@JoinColumn(name="Sid")
+	private SaleOrder saleOrder;
 	public Integer getId() {
 		return id;
 	}
@@ -52,12 +52,6 @@ public class PurchaseInfo {
 	}
 	public void setNumber(int number) {
 		this.number = number;
-	}
-	public int getArrivals() {
-		return arrivals;
-	}
-	public void setArrivals(int arrivals) {
-		this.arrivals = arrivals;
 	}
 	public double getPrice() {
 		return price;
@@ -77,11 +71,17 @@ public class PurchaseInfo {
 	public void setExtend(String extend) {
 		this.extend = extend;
 	}
-	public PurchaseOrder getPurchaseOrder() {
-		return purchaseOrder;
+	public int getShipment() {
+		return shipment;
 	}
-	public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
-		this.purchaseOrder = purchaseOrder;
+	public void setShipment(int shipment) {
+		this.shipment = shipment;
+	}
+	public SaleOrder getSaleOrder() {
+		return saleOrder;
+	}
+	public void setSaleOrder(SaleOrder saleOrder) {
+		this.saleOrder = saleOrder;
 	}
 	
 }

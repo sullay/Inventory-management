@@ -2,24 +2,12 @@ package com.sullay.model.purchase;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
 import com.sullay.model.Goods;
 
 //采购信息
-@Entity
 public class PurchaseInfo {
-	@Id
-	@GeneratedValue
 	private Integer id;
 	//采购商品
-	@ManyToOne
-	@JoinColumn(name="Gid")
 	private Goods goods;
 	//订单数量
 	private int number;
@@ -32,8 +20,6 @@ public class PurchaseInfo {
 	//备注
 	private String extend;
 	//采购订单
-	@ManyToOne(cascade= {CascadeType.ALL})
-	@JoinColumn(name="Pid")
 	private PurchaseOrder purchaseOrder;
 	public Integer getId() {
 		return id;

@@ -3,18 +3,7 @@ package com.sullay.model.purchase;
 import java.util.Date;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-
 //采购订单
-@Entity
 public class PurchaseOrder {
 	
 	public static enum State {
@@ -23,11 +12,7 @@ public class PurchaseOrder {
 		COMPLETE
     }
 	
-	@Id
-	@GeneratedValue
 	private Integer id;
-	//订单编号
-	@Column(unique=true,nullable=false)
 	private String code;
 	//供应商名称
 	private String supplier;
@@ -38,10 +23,8 @@ public class PurchaseOrder {
 	//单据日期
 	private Date date;
 	//订单状态
-	@Enumerated(EnumType.ORDINAL)
 	private State state=State.INCOMPLETE;
 	//采购信息
-	@OneToMany(mappedBy="purchaseOrder",cascade= {CascadeType.ALL},fetch=FetchType.EAGER)
 	private Set<PurchaseInfo> purchaseInfos;
 	public Integer getId() {
 		return id;

@@ -1,4 +1,4 @@
-package com.sullay.model.purchase;
+package com.sullay.model.sale;
 
 import java.util.Date;
 import java.util.Set;
@@ -13,9 +13,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-//采购订单
+//销售订单
 @Entity
-public class PurchaseOrder {
+public class SaleOrder {
 	
 	public static enum State {
 		INVALID,
@@ -29,10 +29,8 @@ public class PurchaseOrder {
 	//订单编号
 	@Column(unique=true,nullable=false)
 	private String code;
-	//供应商名称
-	private String supplier;
-	//采购员名称
-	private String buyer;
+	//客户名称
+	private String customer;
 	//备注
 	private String extend;
 	//单据日期
@@ -40,9 +38,9 @@ public class PurchaseOrder {
 	//订单状态
 	@Enumerated(EnumType.ORDINAL)
 	private State state=State.INCOMPLETE;
-	//采购信息
-	@OneToMany(mappedBy="purchaseOrder",cascade= {CascadeType.ALL},fetch=FetchType.EAGER)
-	private Set<PurchaseInfo> purchaseInfos;
+	//销售信息
+	@OneToMany(mappedBy="saleOrder",cascade= {CascadeType.ALL},fetch=FetchType.EAGER)
+	private Set<SaleInfo> saleInfos;
 	public Integer getId() {
 		return id;
 	}
@@ -55,17 +53,11 @@ public class PurchaseOrder {
 	public void setCode(String code) {
 		this.code = code;
 	}
-	public String getSupplier() {
-		return supplier;
+	public String getCustomer() {
+		return customer;
 	}
-	public void setSupplier(String supplier) {
-		this.supplier = supplier;
-	}
-	public String getBuyer() {
-		return buyer;
-	}
-	public void setBuyer(String buyer) {
-		this.buyer = buyer;
+	public void setCustomer(String customer) {
+		this.customer = customer;
 	}
 	public String getExtend() {
 		return extend;
@@ -85,11 +77,13 @@ public class PurchaseOrder {
 	public void setState(State state) {
 		this.state = state;
 	}
-	public Set<PurchaseInfo> getPurchaseInfos() {
-		return purchaseInfos;
+	public Set<SaleInfo> getSaleInfos() {
+		return saleInfos;
 	}
-	public void setPurchaseInfos(Set<PurchaseInfo> purchaseInfos) {
-		this.purchaseInfos = purchaseInfos;
+	public void setSaleInfos(Set<SaleInfo> saleInfos) {
+		this.saleInfos = saleInfos;
 	}
+
+	
 	
 }

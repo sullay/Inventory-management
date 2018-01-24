@@ -14,13 +14,13 @@ import javax.persistence.OneToMany;
 
 import com.sullay.model.Water;
 
-//采购入库单
+//采购退货单
 @Entity
-public class PurchaseReceipt {
+public class PurchaseDelivery {
 	@Id
 	@GeneratedValue
 	private Integer id;
-	//入库单号
+	//退货单号
 	private String code;
 	//采购订单
 	@ManyToOne
