@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -21,6 +22,7 @@ public class SaleDelivery {
 	@GeneratedValue
 	private Integer id;
 	//销售出库单号
+	@Column(unique=true,nullable=false)
 	private String code;
 	//销售订单
 	@ManyToOne
