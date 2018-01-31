@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.sullay</groupId>
-	<artifactId>IM-server</artifactId>
+	<artifactId>IM-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>IM-server</name>
+	<name>IM-service</name>
 	<description>访问数据库服务</description>
 
 	<parent>
