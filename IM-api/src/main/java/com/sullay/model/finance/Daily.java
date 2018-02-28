@@ -2,15 +2,8 @@ package com.sullay.model.finance;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
 //日常收支
-@Entity
 public class Daily {
-	@Id
-	@GeneratedValue
 	private Integer id;
 	//收支类型
 	private String type;
