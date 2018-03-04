@@ -1,6 +1,7 @@
 package com.sullay.model.other;
 
 import java.util.Date;
+import java.util.Set;
 
 import com.sullay.model.Water;
 
@@ -18,7 +19,7 @@ public class InDelivery {
 	//备注
 	private String extend;
 	//流水账单
-	private Water water;
+	private Set<Water> waters;
 	public Integer getId() {
 		return id;
 	}
@@ -55,11 +56,12 @@ public class InDelivery {
 	public void setExtend(String extend) {
 		this.extend = extend;
 	}
-	public Water getWater() {
-		return water;
+	public Set<Water> getWaters() {
+		return waters;
 	}
-	public void setWater(Water water) {
-		this.water = water;
+	public void setWaters(Set<Water> waters) {
+		this.waters = waters;
 	}
+	
 	
 }

@@ -1,6 +1,7 @@
 package com.sullay.model.other;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -30,7 +31,7 @@ public class InReceipt {
 	//流水账单
 	@OneToMany(cascade= {CascadeType.ALL},fetch=FetchType.EAGER)
 	@JoinColumn(name="InReceipt_id")
-	private Water water;
+	private Set<Water> waters;
 	//领用单号
 	@ManyToOne
 	@JoinColumn(name="D_id")
@@ -59,11 +60,12 @@ public class InReceipt {
 	public void setExtend(String extend) {
 		this.extend = extend;
 	}
-	public Water getWater() {
-		return water;
+	
+	public Set<Water> getWaters() {
+		return waters;
 	}
-	public void setWater(Water water) {
-		this.water = water;
+	public void setWaters(Set<Water> waters) {
+		this.waters = waters;
 	}
 	public InDelivery getIndelivery() {
 		return indelivery;

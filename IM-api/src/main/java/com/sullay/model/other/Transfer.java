@@ -1,6 +1,7 @@
 package com.sullay.model.other;
 
 import java.sql.Date;
+import java.util.Set;
 
 import com.sullay.model.Water;
 
@@ -10,9 +11,9 @@ public class Transfer {
 	//转仓单号
 	private String code;
 	//转出流水
-	private Water delivery;
+	private Set<Water> delivery;
 	//转入流水
-	private Water receipt;
+	private Set<Water> receipt;
 	//单据日期
 	private Date date;
 	//备注
@@ -29,16 +30,17 @@ public class Transfer {
 	public void setCode(String code) {
 		this.code = code;
 	}
-	public Water getDelivery() {
+	
+	public Set<Water> getDelivery() {
 		return delivery;
 	}
-	public void setDelivery(Water delivery) {
+	public void setDelivery(Set<Water> delivery) {
 		this.delivery = delivery;
 	}
-	public Water getReceipt() {
+	public Set<Water> getReceipt() {
 		return receipt;
 	}
-	public void setReceipt(Water receipt) {
+	public void setReceipt(Set<Water> receipt) {
 		this.receipt = receipt;
 	}
 	public Date getDate() {

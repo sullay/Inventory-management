@@ -1,6 +1,7 @@
 package com.sullay.model.other;
 
 import java.sql.Date;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -25,11 +26,11 @@ public class Transfer {
 	//转出流水
 	@OneToMany(cascade= {CascadeType.ALL},fetch=FetchType.EAGER)
 	@JoinColumn(name="TransferDelivery_id")
-	private Water delivery;
+	private Set<Water> delivery;
 	//转入流水
 	@OneToMany(cascade= {CascadeType.ALL},fetch=FetchType.EAGER)
 	@JoinColumn(name="TransferReceipt_id")
-	private Water receipt;
+	private Set<Water> receipt;
 	//单据日期
 	private Date date;
 	//备注
@@ -46,16 +47,17 @@ public class Transfer {
 	public void setCode(String code) {
 		this.code = code;
 	}
-	public Water getDelivery() {
+	
+	public Set<Water> getDelivery() {
 		return delivery;
 	}
-	public void setDelivery(Water delivery) {
+	public void setDelivery(Set<Water> delivery) {
 		this.delivery = delivery;
 	}
-	public Water getReceipt() {
+	public Set<Water> getReceipt() {
 		return receipt;
 	}
-	public void setReceipt(Water receipt) {
+	public void setReceipt(Set<Water> receipt) {
 		this.receipt = receipt;
 	}
 	public Date getDate() {

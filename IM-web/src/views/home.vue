@@ -23,7 +23,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .el-header{
     background-color: #44484B;
     color: #E9EEF3;
