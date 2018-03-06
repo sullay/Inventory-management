@@ -3,7 +3,7 @@ package com.sullay.model.finance;
 import java.util.Date;
 
 //收款记录
-public class FinnanceReceipt {
+public class FinanceReceipt {
 	private Integer id;
 	private Receivables receivables;
 	//日期
