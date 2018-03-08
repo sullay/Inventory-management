@@ -39,7 +39,7 @@ export const putRequest = (url, params) => {
 }
 export const deleteRequest = (url, params) => {
   return axios({
-    method: 'delete',
+    method: 'post',
     url: `${base}${url}`,
     data: params,
     transformRequest: [function (data) {
@@ -48,7 +48,7 @@ export const deleteRequest = (url, params) => {
       for (let it in data) {
         ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
       }
-      return ret
+      return ret + '_method' + '=' + 'delete'
     }],
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'

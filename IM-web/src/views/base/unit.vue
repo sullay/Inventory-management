@@ -1,8 +1,24 @@
 <template>
   <div>
+  <el-dialog
+    :visible.sync="dialogVisible"
+    width="50%"
+    :before-close="close" title="新增计量单位">
+    <el-form :model="unit" label-width="100px">
+    <el-form-item label="库存单位代号:">
+      <el-input placeholder="请输入库存单位代号" v-model="unit.code" autofocus></el-input>
+    </el-form-item>
+    <el-form-item label="库存单位说明:">
+      <el-input placeholder="请输入库存单位代号" v-model="unit.description" @keyup.native.enter="confirm"></el-input>
+    </el-form-item>
+    </el-form>
+    <span slot="footer">
+      <el-button @click="close">取 消</el-button>
+      <el-button type="primary" @click="confirm">确 定</el-button>
+    </span>
+  </el-dialog>
   <el-button-group>
-    <el-button type="success"><i class="fa fa-plus"></i>新增</el-button>
-    <el-button type="danger"><i class="fa fa-times"></i>删除</el-button>
+    <el-button type="success" @click="add"><i class="fa fa-plus"></i>新增</el-button>
   </el-button-group>
   <el-table
     :data="units"
@@ -20,40 +36,100 @@
       prop="description"
       label="库存单位说明">
     </el-table-column>
+    <el-table-column
+      align="center"
+      fixed="right"
+      label="字头修改"
+      width="200">
+      <template slot-scope="scope">
+        <el-button @click="del(scope)" type="text" size="small">删除</el-button>
+      </template>
+    </el-table-column>
   </el-table>
+  <el-pagination
+  background
+  layout="prev, pager, next"
+  :total="totalElements"
+  @current-change="currentChange">
+  </el-pagination>
   </div>
 </template>
 
 <script>
- import {getRequest} from '../../utils/axios.js'
+ import {getRequest, postRequest, deleteRequest} from '../../utils/axios.js'
  export default {
    methods: {
      init () {
-       this.data = {page: 1, size: 10}
+       this.data.page = 0
        this.jump()
      },
      jump () {
        getRequest('/unitAPI/all', this.data)
          .then(resp => {
            this.units = resp.data.extend.pageInfo.content
-           this.totalPages = resp.data.extend.pageInfo.totalPages
            this.totalElements = resp.data.extend.pageInfo.totalElements
          })
          .catch(error => {
            console.log(error)
            this.$message.error('数据请求失败')
          })
+     },
+     add () {
+       this.dialogVisible = true
+     },
+     close () {
+       this.dialogVisible = false
+     },
+     confirm () {
+       postRequest('/unitAPI/', this.unit)
+         .then(resp => {
+           this.jump()
+           this.dialogVisible = false
+         })
+         .catch(error => {
+           console.log(error)
+           this.$message.error('新增单位失败')
+         })
+     },
+     del (scope) {
+       this.$confirm('此操作将永久删除, 是否继续?', '提示', {
+         confirmButtonText: '确定',
+         cancelButtonText: '取消',
+         type: 'error'
+       }).then(() => {
+         deleteRequest('/unitAPI/', scope.row)
+           .then(resp => {
+             this.jump()
+             this.$message({
+               type: 'success',
+               message: '删除成功!'
+             })
+           })
+           .catch(error => {
+             console.log(error)
+             this.$message.error('删除失败')
+           })
+       }).catch(() => {
+         this.$message({
+           type: 'info',
+           message: '已取消删除'
+         })
+       })
+     },
+     currentChange (currentPage) {
+       this.data.page = currentPage - 1
+       this.jump()
      }
    },
 
    data () {
      return {
-       // 总页数
-       totalPages: '',
+       dialogVisible: false,
        // 全部数量
-       totalElements: '',
-       data: {page: 1, size: 10},
-       units: []
+       totalElements: null,
+       data: {page: 0, size: 10},
+       units: [],
+       unit: {id: '', code: '', description: ''}
      }
    },
 
@@ -65,5 +141,9 @@
 <style scoped>
   div{
     text-align: left
+  }
+  .el-pagination{
+    margin: 30px;
+    text-align: center;
   }
 </style>

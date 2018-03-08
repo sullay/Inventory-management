@@ -1,5 +1,6 @@
 package com.sullay.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,6 +14,7 @@ public class Documents {
 	//单据名称
 	private String name;
 	//单据字头
+	@Column(unique=true,nullable=false)
 	private String prefix;
 	public Integer getId() {
 		return id;

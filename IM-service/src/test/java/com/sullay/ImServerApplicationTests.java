@@ -75,4 +75,10 @@ public class ImServerApplicationTests {
 		goods.setUnit(unitRepository.findOne(1));
 		goodsRepository.save(goods);
 	}
+	@Test
+	public void test06() {
+		Unit unit = new Unit();
+		unit.setId(1);
+		unitRepository.delete(unit);
+	}
 }

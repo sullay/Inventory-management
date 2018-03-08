@@ -3,10 +3,10 @@
   <el-dialog
     :visible.sync="dialogVisible"
     width="30%"
-    :before-close="Close">
-    <el-input v-model="document.prefix" :placeholder="document.name" @keyup.native.enter="confirm"></el-input>
-    <span slot="footer" class="dialog-footer">
-      <el-button @click="Close">取 消</el-button>
+    :before-close="close">
+    <el-input v-model="document.prefix" :placeholder="document.name" @keyup.native.enter="confirm" autofocus></el-input>
+    <span slot="footer">
+      <el-button @click="close">取 消</el-button>
       <el-button type="primary" @click="confirm">确 定</el-button>
     </span>
   </el-dialog>
@@ -59,17 +59,20 @@
          })
      },
      confirm () {
-       putRequest('/documentsAPI/', this.document)
-         .then(resp => {
-           this.dialogVisible = false
-         })
-         .catch(error => {
-           console.log(error)
-           this.$message.error('修改失败')
-           this.dialogVisible = false
-         })
+       if (this.document.prefix === '') {
+         this.$message.error('字头不能为空')
+       } else {
+         putRequest('/documentsAPI/', this.document)
+           .then(resp => {
+             this.dialogVisible = false
+           })
+           .catch(error => {
+             console.log(error)
+             this.$message.error('修改失败')
+           })
+       }
      },
-     Close () {
+     close () {
        this.init()
        this.dialogVisible = false
      }
@@ -83,9 +86,10 @@
      }
    },
 
-   created () {
+   mounted () {
      this.init()
    }
+
 }
 </script>
 <style scoped>
