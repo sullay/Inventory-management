@@ -7,8 +7,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.sullay.model.Documents;
+import com.sullay.model.Unit;
 import com.sullay.service.DocumentsService;
 import com.sullay.service.GoodsService;
+import com.sullay.service.UnitService;
 
 
 @RunWith(SpringRunner.class)
@@ -18,10 +20,11 @@ public class ImServerApplicationTests2 {
 	GoodsService goodsService;
 	@Autowired
 	DocumentsService documentsService;
+	@Autowired
+	UnitService unitService;
 	@Test
 	public void test01() {
 		
-		System.out.println(goodsService.findAll(0, 5));
 	}
 	@Test
 	public void test02() {
