@@ -9,7 +9,7 @@
       <el-input placeholder="请输入库存单位代号" v-model="unit.code" autofocus></el-input>
     </el-form-item>
     <el-form-item label="库存单位说明:">
-      <el-input placeholder="请输入库存单位代号" v-model="unit.description" @keyup.native.enter="confirm"></el-input>
+      <el-input placeholder="请输入库存单位说明" v-model="unit.description" @keyup.native.enter="confirm"></el-input>
     </el-form-item>
     </el-form>
     <span slot="footer">
@@ -17,9 +17,7 @@
       <el-button type="primary" @click="confirm">确 定</el-button>
     </span>
   </el-dialog>
-  <el-button-group>
-    <el-button type="success" @click="add"><i class="fa fa-plus"></i>新增</el-button>
-  </el-button-group>
+  <el-button type="success" @click="add"><i class="fa fa-plus"></i>新增</el-button>
   <el-table
     :data="units"
     border
@@ -39,7 +37,7 @@
     <el-table-column
       align="center"
       fixed="right"
-      label="字头修改"
+      label="删除"
       width="200">
       <template slot-scope="scope">
         <el-button @click="del(scope)" type="text" size="small">删除</el-button>
@@ -129,7 +127,7 @@
        totalElements: null,
        data: {page: 0, size: 10},
        units: [],
-       unit: {id: '', code: '', description: ''}
+       unit: {id: 0, code: '', description: ''}
      }
    },
 
