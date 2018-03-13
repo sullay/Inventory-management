@@ -124,7 +124,7 @@ export default {
         })
         .catch(error => {
           console.log(error)
-          this.$message.error('新增仓库失败')
+          this.$message.error('新增仓库失败，仓库代号不能重复')
         })
     },
     edit_confirm () {
@@ -134,7 +134,7 @@ export default {
         })
         .catch(error => {
           console.log(error)
-          this.$message.error('修改仓库信息失败')
+          this.$message.error('修改仓库信息失败，仓库代号不能重复')
         })
     },
     del (scope) {

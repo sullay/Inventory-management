@@ -86,7 +86,7 @@
          })
          .catch(error => {
            console.log(error)
-           this.$message.error('新增单位失败')
+           this.$message.error('新增单位失败，单位代号不能重复')
          })
      },
      del (scope) {
