@@ -3,20 +3,43 @@
     <el-dialog
     :visible.sync="dialogVisible"
     width="50%"
-    :before-close="close" title="仓库信息">
-    <el-form :model="warehouse" label-width="100px">
-    <el-form-item label="仓库代号:">
-      <el-input placeholder="请输入仓库代号" v-model="warehouse.code" autofocus></el-input>
+    :before-close="close" title="商品信息">
+    <el-form :model="goods" label-width="100px">
+    <el-form-item label="商品编号:">
+      <el-input placeholder="请输入商品编号" v-model="goods.code" autofocus></el-input>
     </el-form-item>
-    <el-form-item label="仓库名称:">
-      <el-input placeholder="请输入仓库名称" v-model="warehouse.name"></el-input>
+    <el-form-item label="商品名称:">
+      <el-input placeholder="请输入商品名称" v-model="goods.name"></el-input>
     </el-form-item>
-    <el-form-item label="仓库地点:">
-      <el-input placeholder="请输入仓库地点" v-model="warehouse.place"></el-input>
+    <el-form-item label="商品规格:">
+      <el-input placeholder="请输入商品规格" v-model="goods.specification"></el-input>
     </el-form-item>
-    <el-form-item label="备注:">
-      <el-input placeholder="请输入仓库备注" v-model="warehouse.extend"  @keyup.native.enter="confirm" v-if="isAdd"></el-input>
-      <el-input placeholder="请输入仓库备注" v-model="warehouse.extend"  @keyup.native.enter="edit_confirm" v-else></el-input>
+    <el-form-item label="商品种类:">
+      <el-select v-model="goods.goodsType.id" filterable placeholder="请选择">
+        <el-option
+          v-for="item in goodsTypes"
+          :key="item.id"
+          :label="item.name"
+          :value="item.id">
+        </el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item label="库存单位:">
+      <el-select v-model="goods.unit.id" filterable placeholder="请选择">
+        <el-option
+          v-for="item in units"
+          :key="item.id"
+          :label="item.code"
+          :value="item.id">
+        </el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item label="品牌:">
+      <el-input placeholder="请输入品牌" v-model="goods.brand"></el-input>
+    </el-form-item>
+    <el-form-item label="商品单价:">
+      <el-input placeholder="请输入商品单价" v-model="goods.price"  @keyup.native.enter="confirm" v-if="isAdd"></el-input>
+      <el-input placeholder="请输入商品单价" v-model="goods.price"  @keyup.native.enter="edit_confirm" v-else></el-input>
     </el-form-item>
     </el-form>
     <span slot="footer">
@@ -98,8 +121,10 @@ export default {
       totalElements: null,
       data: {page: 0, size: 10},
       allGoods: [],
-      goods: {id: 0, code: '', name: '', specification: '', goodsType: {id: 0, code: '', name: '', codingPrefix: ''}, unit: {id: 0, code: '', description: ''}, brand: '', price: 0.0},
-      isAdd: true
+      goods: {id: 0, code: '', name: '', specification: '', goodsType: {id: '', code: '', name: '', codingPrefix: ''}, unit: {id: '', code: '', description: ''}, brand: '', price: ''},
+      isAdd: true,
+      goodsTypes: [],
+      units: []
     }
   },
   methods: {
@@ -108,10 +133,26 @@ export default {
       this.jump()
     },
     jump () {
-      getRequest('/warehouseAPI/all', this.data)
+      getRequest('/goodsAPI/all', this.data)
         .then(resp => {
-          this.warehouses = resp.data.extend.pageInfo.content
+          this.allGoods = resp.data.extend.pageInfo.content
           this.totalElements = resp.data.extend.pageInfo.totalElements
+        })
+        .catch(error => {
+          console.log(error)
+          this.$message.error('数据请求失败')
+        })
+      getRequest('/goodsTypeAPI/all_NoPage')
+        .then(resp => {
+          this.goodsTypes = resp.data.extend.pageInfo
+        })
+        .catch(error => {
+          console.log(error)
+          this.$message.error('数据请求失败')
+        })
+      getRequest('/unitAPI/all_NoPage')
+        .then(resp => {
+          this.units = resp.data.extend.pageInfo
         })
         .catch(error => {
           console.log(error)
@@ -131,25 +172,26 @@ export default {
       this.jump()
     },
     confirm () {
-      this.warehouse.id = 0
-      postRequest('/warehouseAPI/', this.warehouse)
+      this.goods.id = 0
+      postRequest('/goodsAPI/', this.goods)
         .then(resp => {
           this.jump()
           this.dialogVisible = false
         })
         .catch(error => {
           console.log(error)
-          this.$message.error('新增仓库失败，仓库代号不能重复')
+          this.$message.error('新增商品失败，商品编号不能重复')
         })
     },
     edit_confirm () {
-      putRequest('/warehouseAPI/', this.warehouse)
+      putRequest('/goodsAPI/', this.goods)
         .then(resp => {
+          this.jump()
           this.dialogVisible = false
         })
         .catch(error => {
           console.log(error)
-          this.$message.error('修改仓库信息失败，仓库代号不能重复')
+          this.$message.error('修改商品失败，商品编号不能重复')
         })
     },
     del (scope) {
@@ -158,7 +200,7 @@ export default {
         cancelButtonText: '取消',
         type: 'error'
       }).then(() => {
-        deleteRequest('/warehouseAPI/', scope.row)
+        deleteRequest('/goodsAPI/', scope.row)
           .then(resp => {
             this.jump()
             this.$message({
@@ -179,7 +221,7 @@ export default {
     },
     edit (scope) {
       this.isAdd = false
-      this.warehouse = scope.row
+      this.goods = scope.row
       this.dialogVisible = true
     }
   },

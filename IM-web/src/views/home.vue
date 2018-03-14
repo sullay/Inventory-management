@@ -4,7 +4,8 @@
   <el-container>
     <el-aside width="160px"><div class="noScroll"><SideBar></SideBar></div></el-aside>
     <el-main>
-      <HomeMain v-if="this.$route.path=='/home'"></HomeMain>
+      <HomeMain v-if="this.$route.path=='/home'">
+      </HomeMain>
       <router-view v-else/>
     </el-main>
   </el-container>

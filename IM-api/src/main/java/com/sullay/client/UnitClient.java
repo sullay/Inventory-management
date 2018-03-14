@@ -20,4 +20,6 @@ public interface UnitClient {
 	public void update(@RequestBody Unit unit);
 	@RequestMapping(value="/all",method=RequestMethod.GET)
 	public Msg findAll(@RequestParam("page")int page,@RequestParam("size")int size);
+	@RequestMapping(value="/all_NoPage",method=RequestMethod.GET)
+	public Msg findAll();
 }

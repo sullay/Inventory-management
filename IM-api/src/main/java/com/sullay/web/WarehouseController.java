@@ -2,6 +2,7 @@ package com.sullay.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,15 +22,15 @@ public class WarehouseController {
 		return warehouseClient.findAll(page, size);
 	}
 	@RequestMapping(value="/",method=RequestMethod.POST)
-	public void create(Warehouse warehouse) {
+	public void create(@RequestBody Warehouse warehouse) {
 		warehouseClient.create(warehouse);
 	}
 	@RequestMapping(value="/",method=RequestMethod.DELETE)
-	public void detele(Warehouse warehouse) {
+	public void detele(@RequestBody Warehouse warehouse) {
 		warehouseClient.detele(warehouse);
 	}
 	@RequestMapping(value="/",method=RequestMethod.PUT)
-	public void update(Warehouse warehouse) {
+	public void update(@RequestBody Warehouse warehouse) {
 		warehouseClient.update(warehouse);
 	}
 }

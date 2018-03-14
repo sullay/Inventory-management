@@ -16,6 +16,7 @@ import com.sullay.repository.GoodsTypeRepository;
 import com.sullay.repository.StockRepository;
 import com.sullay.repository.UnitRepository;
 import com.sullay.repository.WarehouseRepository;
+import com.sullay.service.UnitService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -30,6 +31,8 @@ public class ImServerApplicationTests {
 	GoodsRepository goodsRepository;
 	@Autowired
 	GoodsTypeRepository goodsTypeRepository;
+	@Autowired
+	UnitService unitService;
 	@Test
 	public void test01() {
 		Stock stock = new Stock();

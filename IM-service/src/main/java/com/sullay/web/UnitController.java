@@ -33,4 +33,8 @@ public class UnitController {
 	public Msg findAll(@RequestParam("page")int page,@RequestParam("size")int size) {
 		return Msg.success().add("pageInfo", unitService.findAll(page, size));
 	}
+	@RequestMapping(value="/all_NoPage",method=RequestMethod.GET)
+	public Msg findAll() {
+		return Msg.success().add("pageInfo", unitService.findAll());
+	}
 }

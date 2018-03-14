@@ -6,16 +6,8 @@ export const postRequest = (url, params) => {
     method: 'post',
     url: `${base}${url}`,
     data: params,
-    transformRequest: [function (data) {
-      // Do whatever you want to transform the data
-      let ret = ''
-      for (let it in data) {
-        ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
-      }
-      return ret
-    }],
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/json'
     }
   })
 }
@@ -24,34 +16,18 @@ export const putRequest = (url, params) => {
     method: 'put',
     url: `${base}${url}`,
     data: params,
-    transformRequest: [function (data) {
-      // Do whatever you want to transform the data
-      let ret = ''
-      for (let it in data) {
-        ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
-      }
-      return ret
-    }],
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/json'
     }
   })
 }
 export const deleteRequest = (url, params) => {
   return axios({
-    method: 'post',
+    method: 'delete',
     url: `${base}${url}`,
     data: params,
-    transformRequest: [function (data) {
-      // Do whatever you want to transform the data
-      let ret = ''
-      for (let it in data) {
-        ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
-      }
-      return ret + '_method' + '=' + 'delete'
-    }],
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/json'
     }
   })
 }
