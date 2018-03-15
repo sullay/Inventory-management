@@ -28,15 +28,17 @@ public class ImApiApplicationTests {
 	}
 	@Test
 	public void test02() {
-		Detail detail=new Detail();
-		detail.setCode("1");
-		detail.setDate(new Date());
-		detail.setExtend("1");
-		detail.setId(0);
-		detail.setIncome(10.0);
-		detail.setPay(0.0);
-		detail.setTrader("1");
-		detail.setType("1");
-		detailClient.create(detail);
+		for (int i = 0; i < 12; i++) {
+			Detail detail=new Detail();
+			detail.setCode("1"+i);
+			detail.setDate(new Date());
+			detail.setExtend("1"+i);
+			detail.setId(0);
+			detail.setIncome(10.0);
+			detail.setPay(0.0);
+			detail.setTrader("1");
+			detail.setType("1");
+			detailClient.create(detail);
+		}
 	}
 }

@@ -4,19 +4,26 @@
     :visible.sync="dialogVisible"
     width="50%"
     :before-close="close" title="仓库信息">
-    <el-form :model="warehouse" label-width="100px">
-    <el-form-item label="仓库代号:">
-      <el-input placeholder="请输入仓库代号" v-model="warehouse.code" autofocus></el-input>
+    <el-form :model="daily" label-width="100px">
+    <el-form-item label="收支类型:">
+      <el-select v-model="daily.type" filterable placeholder="请输入收支类型" autofocus>
+        <el-option
+          v-for="item in type"
+          :key="item"
+          :label="item"
+          :value="item">
+        </el-option>
+      </el-select>
     </el-form-item>
-    <el-form-item label="仓库名称:">
-      <el-input placeholder="请输入仓库名称" v-model="warehouse.name"></el-input>
+    <el-form-item label="交易商:">
+      <el-input placeholder="请输入交易商" v-model="daily.trader"></el-input>
     </el-form-item>
-    <el-form-item label="仓库地点:">
-      <el-input placeholder="请输入仓库地点" v-model="warehouse.place"></el-input>
+    <el-form-item label="金额:">
+      <el-input placeholder="请输入金额" v-model="daily.amount"></el-input>
     </el-form-item>
     <el-form-item label="备注:">
-      <el-input placeholder="请输入仓库备注" v-model="warehouse.extend"  @keyup.native.enter="confirm" v-if="isAdd"></el-input>
-      <el-input placeholder="请输入仓库备注" v-model="warehouse.extend"  @keyup.native.enter="edit_confirm" v-else></el-input>
+      <el-input placeholder="请输入仓库备注" v-model="daily.extend"  @keyup.native.enter="confirm" v-if="isAdd"></el-input>
+      <el-input placeholder="请输入仓库备注" v-model="daily.extend"  @keyup.native.enter="edit_confirm" v-else></el-input>
     </el-form-item>
     </el-form>
     <span slot="footer">
@@ -27,27 +34,33 @@
     </el-dialog>
     <el-button type="success" @click="add"><i class="fa fa-plus"></i>新增</el-button>
     <el-table
-    :data="warehouses"
+    :data="dailys"
     border
     style="width: 100%"
     size="small">
     <el-table-column
       fixed
       align="center"
-      prop="code"
-      label="仓库代号">
+      prop="date"
+      label="日期"
+      :formatter="formatter">
     </el-table-column>
     <el-table-column
       align="center"
-      prop="name"
-      label="仓库名称">
+      prop="type"
+      label="收支类型">
     </el-table-column>
     <el-table-column
       align="center"
-      prop="place"
-      label="仓库地点">
+      prop="trader"
+      label="交易商">
     </el-table-column>
     <el-table-column
+      align="center"
+      prop="amount"
+      label="金额">
+    </el-table-column>
+     <el-table-column
       align="center"
       prop="extend"
       label="备注">
@@ -75,6 +88,7 @@
 </template>
 <script>
 import {getRequest, postRequest, deleteRequest, putRequest} from '../../utils/axios.js'
+import {formatDateTime} from '../../utils/formatDateTime.js'
 export default {
   data () {
     return {
@@ -82,9 +96,10 @@ export default {
       // 全部数量
       totalElements: null,
       data: {page: 0, size: 10},
-      warehouses: [],
-      warehouse: {id: 0, code: '', name: '', place: '', extend: ''},
-      isAdd: true
+      dailys: [],
+      daily: {id: 0, type: '', trader: '', amount: '', extend: '', date: 0, detail: {id: 0, date: 0, code: '', trader: '', income: 0, pay: 0, type: '', extend: ''}},
+      isAdd: true,
+      type: ['收入', '支出']
     }
   },
   methods: {
@@ -93,9 +108,9 @@ export default {
       this.jump()
     },
     jump () {
-      getRequest('/warehouseAPI/all', this.data)
+      getRequest('/dailyAPI/all', this.data)
         .then(resp => {
-          this.warehouses = resp.data.extend.pageInfo.content
+          this.dailys = resp.data.extend.pageInfo.content
           this.totalElements = resp.data.extend.pageInfo.totalElements
         })
         .catch(error => {
@@ -116,25 +131,53 @@ export default {
       this.jump()
     },
     confirm () {
-      this.warehouse.id = 0
-      postRequest('/warehouseAPI/', this.warehouse)
+      this.daily.id = 0
+      this.daily.date = new Date()
+      this.daily.detail.id = 0
+      this.daily.detail.date = this.daily.date
+      this.daily.detail.code = ''
+      this.daily.detail.trader = this.daily.trader
+      this.daily.detail.type = '日常收支'
+      this.daily.detail.extend = this.daily.extend
+      if (this.daily.type === '收入') {
+        this.daily.detail.income = this.daily.amount
+        this.daily.detail.pay = 0
+      } else {
+        this.daily.detail.pay = this.daily.amount
+        this.daily.detail.income = 0
+      }
+      postRequest('/dailyAPI/', this.daily)
         .then(resp => {
           this.jump()
           this.dialogVisible = false
         })
         .catch(error => {
           console.log(error)
-          this.$message.error('新增仓库失败，仓库代号不能重复')
+          this.$message.error('新增日常收支失败')
         })
     },
     edit_confirm () {
-      putRequest('/warehouseAPI/', this.warehouse)
+      this.daily.date = new Date()
+      this.daily.detail.date = this.daily.date
+      this.daily.detail.code = ''
+      this.daily.detail.trader = this.daily.trader
+      this.daily.detail.type = '日常收支'
+      this.daily.detail.extend = this.daily.extend
+      if (this.daily.type === '收入') {
+        this.daily.detail.income = this.daily.amount
+        this.daily.detail.pay = 0
+      } else {
+        this.daily.detail.pay = this.daily.amount
+        this.daily.detail.income = 0
+      }
+      putRequest('/dailyAPI/', this.daily)
         .then(resp => {
+          this.jump()
           this.dialogVisible = false
         })
         .catch(error => {
           console.log(error)
-          this.$message.error('修改仓库信息失败，仓库代号不能重复')
+          this.$message.error('修改日常收支失败')
         })
     },
     del (scope) {
@@ -143,13 +186,20 @@ export default {
         cancelButtonText: '取消',
         type: 'error'
       }).then(() => {
-        deleteRequest('/warehouseAPI/', scope.row)
+        deleteRequest('/dailyAPI/', scope.row)
           .then(resp => {
-            this.jump()
-            this.$message({
-              type: 'success',
-              message: '删除成功!'
-            })
+            deleteRequest('/detailAPI/', scope.row.detail)
+              .then(resp => {
+                this.jump()
+                this.$message({
+                  type: 'success',
+                  message: '删除成功!'
+                })
+              })
+              .catch(error => {
+                console.log(error)
+                this.$message.error('删除失败')
+              })
           })
           .catch(error => {
             console.log(error)
@@ -164,8 +214,11 @@ export default {
     },
     edit (scope) {
       this.isAdd = false
-      this.warehouse = scope.row
+      this.daily = scope.row
       this.dialogVisible = true
+    },
+    formatter (row, column, cellValue) {
+      return formatDateTime(cellValue)
     }
   },
   mounted () {

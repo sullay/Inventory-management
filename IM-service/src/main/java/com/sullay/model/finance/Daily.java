@@ -2,9 +2,13 @@ package com.sullay.model.finance;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 //日常收支
 @Entity
@@ -22,6 +26,10 @@ public class Daily {
 	private String extend;
 	//日期
 	private Date date;
+	//收支明细
+	@OneToOne(cascade= {CascadeType.ALL},fetch=FetchType.EAGER)
+	@JoinColumn(name="did")
+	private Detail detail;
 	public Integer getId() {
 		return id;
 	}
@@ -58,6 +66,12 @@ public class Daily {
 	}
 	public void setDate(Date date) {
 		this.date = date;
+	}
+	public Detail getDetail() {
+		return detail;
+	}
+	public void setDetail(Detail detail) {
+		this.detail = detail;
 	}
 	
 }
