@@ -1,8 +1,5 @@
 package com.sullay.model.finance;
 
-import com.sullay.model.purchase.PurchaseOrder;
-import com.sullay.model.sale.SaleReceipt;
-
 //应付款记录
 public class Payable {
 	public static enum State {
@@ -13,12 +10,10 @@ public class Payable {
 	private Integer id;
 	//应付款单号
 	private String code;
-	//采购订单
-	private PurchaseOrder purchaseOrder;
-	//销售退货单
-	private SaleReceipt saleReceipt;
 	//已付金额
 	private Double amountPaid=0.0;
+	//总金额
+	private Double amount;
 	//状态
 	private State state=State.INCOMPLETE;
 	//备注
@@ -34,12 +29,6 @@ public class Payable {
 	}
 	public void setCode(String code) {
 		this.code = code;
-	}
-	public PurchaseOrder getPurchaseOrder() {
-		return purchaseOrder;
-	}
-	public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
-		this.purchaseOrder = purchaseOrder;
 	}
 	public Double getAmountPaid() {
 		return amountPaid;
@@ -59,12 +48,13 @@ public class Payable {
 	public void setExtend(String extend) {
 		this.extend = extend;
 	}
-	public SaleReceipt getSaleReceipt() {
-		return saleReceipt;
+	public Double getAmount() {
+		return amount;
 	}
-	public void setSaleReceipt(SaleReceipt saleReceipt) {
-		this.saleReceipt = saleReceipt;
+	public void setAmount(Double amount) {
+		this.amount = amount;
 	}
+	
 	
 	
 }

@@ -2,11 +2,14 @@ package com.sullay.model.finance;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 //收款记录
 @Entity
@@ -14,7 +17,7 @@ public class FinanceReceipt {
 	@Id
 	@GeneratedValue
 	private Integer id;
-	@ManyToOne
+	@ManyToOne(cascade= {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH},fetch=FetchType.EAGER)
 	@JoinColumn(name="Rid")
 	private Receivables receivables;
 	//日期
@@ -23,6 +26,11 @@ public class FinanceReceipt {
 	private Double amount;
 	//备注
 	private String extend;
+
+	//收支明细
+	@OneToOne(cascade= {CascadeType.ALL},fetch=FetchType.EAGER)
+	@JoinColumn(name="did")
+	private Detail detail;
 	public Integer getId() {
 		return id;
 	}
@@ -52,6 +60,12 @@ public class FinanceReceipt {
 	}
 	public void setExtend(String extend) {
 		this.extend = extend;
+	}
+	public Detail getDetail() {
+		return detail;
+	}
+	public void setDetail(Detail detail) {
+		this.detail = detail;
 	}
 	
 }

@@ -1,8 +1,5 @@
 package com.sullay.model.finance;
 
-import com.sullay.model.purchase.PurchaseDelivery;
-import com.sullay.model.sale.SaleOrder;
-
 //应收款记录
 public class Receivables {
 	public static enum State {
@@ -13,12 +10,10 @@ public class Receivables {
 	private Integer id;
 	//应收款单号
 	private String code;
-	//销售订单
-	private SaleOrder saleOrder;
-	//采购退货单
-	private PurchaseDelivery purchaseDelivery;
 	//已收金额
 	private Double amountReceived=0.0;
+	//总金额
+	private Double amount;
 	//状态
 	private State state=State.INCOMPLETE;
 	//备注
@@ -34,12 +29,6 @@ public class Receivables {
 	}
 	public void setCode(String code) {
 		this.code = code;
-	}
-	public SaleOrder getSaleOrder() {
-		return saleOrder;
-	}
-	public void setSaleOrder(SaleOrder saleOrder) {
-		this.saleOrder = saleOrder;
 	}
 	public Double getAmountReceived() {
 		return amountReceived;
@@ -59,11 +48,11 @@ public class Receivables {
 	public void setExtend(String extend) {
 		this.extend = extend;
 	}
-	public PurchaseDelivery getPurchaseDelivery() {
-		return purchaseDelivery;
+	public Double getAmount() {
+		return amount;
 	}
-	public void setPurchaseDelivery(PurchaseDelivery purchaseDelivery) {
-		this.purchaseDelivery = purchaseDelivery;
+	public void setAmount(Double amount) {
+		this.amount = amount;
 	}
 	
 }

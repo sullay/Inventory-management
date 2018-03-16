@@ -19,7 +19,7 @@
       <el-input placeholder="请输入交易商" v-model="daily.trader"></el-input>
     </el-form-item>
     <el-form-item label="金额:">
-      <el-input placeholder="请输入金额" v-model="daily.amount"></el-input>
+      <el-input placeholder="请输入金额" v-model.number="daily.amount"></el-input>
     </el-form-item>
     <el-form-item label="备注:">
       <el-input placeholder="请输入仓库备注" v-model="daily.extend"  @keyup.native.enter="confirm" v-if="isAdd"></el-input>
@@ -188,18 +188,11 @@ export default {
       }).then(() => {
         deleteRequest('/dailyAPI/', scope.row)
           .then(resp => {
-            deleteRequest('/detailAPI/', scope.row.detail)
-              .then(resp => {
-                this.jump()
-                this.$message({
-                  type: 'success',
-                  message: '删除成功!'
-                })
-              })
-              .catch(error => {
-                console.log(error)
-                this.$message.error('删除失败')
-              })
+            this.jump()
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            })
           })
           .catch(error => {
             console.log(error)

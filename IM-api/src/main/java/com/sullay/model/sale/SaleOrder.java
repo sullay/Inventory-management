@@ -3,6 +3,8 @@ package com.sullay.model.sale;
 import java.util.Date;
 import java.util.Set;
 
+import com.sullay.model.finance.Receivables;
+
 //销售订单
 public class SaleOrder {
 	
@@ -11,7 +13,6 @@ public class SaleOrder {
 		INCOMPLETE,
 		COMPLETE
     }
-	
 	private Integer id;
 	//订单编号
 	private String code;
@@ -25,6 +26,8 @@ public class SaleOrder {
 	private State state=State.INCOMPLETE;
 	//销售信息
 	private Set<SaleInfo> saleInfos;
+	//应收款记录
+	private Receivables receivables;
 	public Integer getId() {
 		return id;
 	}
@@ -66,6 +69,12 @@ public class SaleOrder {
 	}
 	public void setSaleInfos(Set<SaleInfo> saleInfos) {
 		this.saleInfos = saleInfos;
+	}
+	public Receivables getReceivables() {
+		return receivables;
+	}
+	public void setReceivables(Receivables receivables) {
+		this.receivables = receivables;
 	}
 
 	

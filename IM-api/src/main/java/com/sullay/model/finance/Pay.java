@@ -12,6 +12,7 @@ public class Pay {
 	private Double amount;
 	//备注
 	private String extend;
+	private Detail detail;
 	public Integer getId() {
 		return id;
 	}
@@ -41,6 +42,12 @@ public class Pay {
 	}
 	public void setExtend(String extend) {
 		this.extend = extend;
+	}
+	public Detail getDetail() {
+		return detail;
+	}
+	public void setDetail(Detail detail) {
+		this.detail = detail;
 	}
 	
 }

@@ -11,7 +11,11 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import com.sullay.model.finance.Receivables;
 
 //销售订单
 @Entity
@@ -41,6 +45,10 @@ public class SaleOrder {
 	//销售信息
 	@OneToMany(mappedBy="saleOrder",cascade= {CascadeType.ALL},fetch=FetchType.EAGER)
 	private Set<SaleInfo> saleInfos;
+	//应收款记录
+	@OneToOne(cascade= {CascadeType.ALL},fetch=FetchType.EAGER)
+	@JoinColumn(name="rid")
+	private Receivables receivables;
 	public Integer getId() {
 		return id;
 	}
@@ -82,6 +90,12 @@ public class SaleOrder {
 	}
 	public void setSaleInfos(Set<SaleInfo> saleInfos) {
 		this.saleInfos = saleInfos;
+	}
+	public Receivables getReceivables() {
+		return receivables;
+	}
+	public void setReceivables(Receivables receivables) {
+		this.receivables = receivables;
 	}
 
 	

@@ -12,8 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import com.sullay.model.Water;
+import com.sullay.model.finance.Payable;
 
 //销售退货单
 @Entity
@@ -27,7 +29,7 @@ public class SaleReceipt {
 	//销售订单
 	@ManyToOne
 	@JoinColumn(name="Sid")
-	private SaleOrder saleOrder;
+	private SaleInfo saleInfo;
 	//备注
 	private String extend;
 	//单据日期
@@ -36,6 +38,11 @@ public class SaleReceipt {
 	@OneToMany(cascade= {CascadeType.ALL},fetch=FetchType.EAGER)
 	@JoinColumn(name="SaleReceipt_id")
 	private Set<Water> waters;
+
+	//应付款记录
+	@OneToOne(cascade= {CascadeType.ALL},fetch=FetchType.EAGER)
+	@JoinColumn(name="pid")
+	private Payable payable;
 	public Integer getId() {
 		return id;
 	}
@@ -48,11 +55,12 @@ public class SaleReceipt {
 	public void setCode(String code) {
 		this.code = code;
 	}
-	public SaleOrder getSaleOrder() {
-		return saleOrder;
+	
+	public SaleInfo getSaleInfo() {
+		return saleInfo;
 	}
-	public void setSaleOrder(SaleOrder saleOrder) {
-		this.saleOrder = saleOrder;
+	public void setSaleInfo(SaleInfo saleInfo) {
+		this.saleInfo = saleInfo;
 	}
 	public String getExtend() {
 		return extend;
@@ -71,6 +79,12 @@ public class SaleReceipt {
 	}
 	public void setWaters(Set<Water> waters) {
 		this.waters = waters;
+	}
+	public Payable getPayable() {
+		return payable;
+	}
+	public void setPayable(Payable payable) {
+		this.payable = payable;
 	}
 	
 	

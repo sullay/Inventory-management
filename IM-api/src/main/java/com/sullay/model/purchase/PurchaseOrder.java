@@ -3,6 +3,8 @@ package com.sullay.model.purchase;
 import java.util.Date;
 import java.util.Set;
 
+import com.sullay.model.finance.Payable;
+
 //采购订单
 public class PurchaseOrder {
 	
@@ -13,6 +15,7 @@ public class PurchaseOrder {
     }
 	
 	private Integer id;
+	//订单编号
 	private String code;
 	//供应商名称
 	private String supplier;
@@ -26,6 +29,8 @@ public class PurchaseOrder {
 	private State state=State.INCOMPLETE;
 	//采购信息
 	private Set<PurchaseInfo> purchaseInfos;
+	//应付款记录
+	private Payable payable;
 	public Integer getId() {
 		return id;
 	}
@@ -73,6 +78,12 @@ public class PurchaseOrder {
 	}
 	public void setPurchaseInfos(Set<PurchaseInfo> purchaseInfos) {
 		this.purchaseInfos = purchaseInfos;
+	}
+	public Payable getPayable() {
+		return payable;
+	}
+	public void setPayable(Payable payable) {
+		this.payable = payable;
 	}
 	
 }

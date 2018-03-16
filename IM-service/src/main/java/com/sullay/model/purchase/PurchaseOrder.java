@@ -11,7 +11,11 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import com.sullay.model.finance.Payable;
 
 //采购订单
 @Entity
@@ -43,6 +47,10 @@ public class PurchaseOrder {
 	//采购信息
 	@OneToMany(mappedBy="purchaseOrder",cascade= {CascadeType.ALL},fetch=FetchType.EAGER)
 	private Set<PurchaseInfo> purchaseInfos;
+	//应付款记录
+	@OneToOne(cascade= {CascadeType.ALL},fetch=FetchType.EAGER)
+	@JoinColumn(name="pid")
+	private Payable payable;
 	public Integer getId() {
 		return id;
 	}
@@ -90,6 +98,12 @@ public class PurchaseOrder {
 	}
 	public void setPurchaseInfos(Set<PurchaseInfo> purchaseInfos) {
 		this.purchaseInfos = purchaseInfos;
+	}
+	public Payable getPayable() {
+		return payable;
+	}
+	public void setPayable(Payable payable) {
+		this.payable = payable;
 	}
 	
 }

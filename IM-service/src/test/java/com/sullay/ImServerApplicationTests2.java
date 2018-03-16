@@ -1,5 +1,7 @@
 package com.sullay;
 
+import java.util.Date;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,9 +9,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.sullay.model.Documents;
+import com.sullay.model.finance.Detail;
+import com.sullay.model.finance.FinanceReceipt;
+import com.sullay.model.finance.Pay;
+import com.sullay.model.finance.Payable;
+import com.sullay.model.finance.Payable.State;
+import com.sullay.model.finance.Receivables;
 import com.sullay.service.DocumentsService;
 import com.sullay.service.GoodsService;
 import com.sullay.service.UnitService;
+import com.sullay.service.finance.FinanceReceiptService;
+import com.sullay.service.finance.PayService;
 
 
 @RunWith(SpringRunner.class)
@@ -21,6 +31,10 @@ public class ImServerApplicationTests2 {
 	DocumentsService documentsService;
 	@Autowired
 	UnitService unitService;
+	@Autowired
+	PayService payService;
+	@Autowired
+	FinanceReceiptService financeReceiptService;
 	@Test
 	public void test01() {
 		
@@ -80,5 +94,51 @@ public class ImServerApplicationTests2 {
 		documents11.setPrefix("QCK");
 		documentsService.create(documents11);
 		
+	}
+	@Test
+	public void test03() {
+		Payable payable = new Payable();
+		payable.setAmountPaid(1.0);
+		payable.setCode("2");
+		payable.setExtend("1");
+		payable.setState(State.INCOMPLETE);
+		payable.setAmount(12.0);
+		Pay pay = new Pay();
+		pay.setDate(new Date());
+		pay.setExtend("1");
+		pay.setAmount(1.0);
+		pay.setPayable(payable);
+		Detail detail = new Detail();
+		detail.setCode(pay.getPayable().getCode());
+		detail.setDate(new Date());
+		detail.setExtend("1");
+		detail.setPay(pay.getAmount());
+		detail.setTrader("1");
+		detail.setType("付款");
+		pay.setDetail(detail);
+		payService.create(pay);
+	}
+	@Test
+	public void test04() {
+		Receivables receivables = new Receivables();
+		receivables.setAmountReceived(1.0);
+		receivables.setCode("2");
+		receivables.setExtend("1");
+		receivables.setState(com.sullay.model.finance.Receivables.State.INCOMPLETE);
+		receivables.setAmount(12.0);
+		FinanceReceipt financeReceipt = new FinanceReceipt();
+		financeReceipt.setDate(new Date());
+		financeReceipt.setExtend("1");
+		financeReceipt.setAmount(1.0);
+		financeReceipt.setReceivables(receivables);
+		Detail detail = new Detail();
+		detail.setCode(financeReceipt.getReceivables().getCode());
+		detail.setDate(new Date());
+		detail.setExtend("1");
+		detail.setIncome(financeReceipt.getAmount());
+		detail.setTrader("1");
+		detail.setType("付款");
+		financeReceipt.setDetail(detail);
+		financeReceiptService.create(financeReceipt);
 	}
 }

@@ -6,11 +6,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-
-import com.sullay.model.purchase.PurchaseDelivery;
-import com.sullay.model.sale.SaleOrder;
 
 //应收款记录
 @Entity
@@ -26,16 +21,10 @@ public class Receivables {
 	//应收款单号
 	@Column(unique=true,nullable=false)
 	private String code;
-	//销售订单
-	@OneToOne
-	@JoinColumn(name="sid")
-	private SaleOrder saleOrder;
-	//采购退货单
-	@OneToOne
-	@JoinColumn(name="pid")
-	private PurchaseDelivery purchaseDelivery;
 	//已收金额
 	private Double amountReceived=0.0;
+	//总金额
+	private Double amount;
 	//状态
 	@Enumerated(EnumType.ORDINAL)
 	private State state=State.INCOMPLETE;
@@ -52,12 +41,6 @@ public class Receivables {
 	}
 	public void setCode(String code) {
 		this.code = code;
-	}
-	public SaleOrder getSaleOrder() {
-		return saleOrder;
-	}
-	public void setSaleOrder(SaleOrder saleOrder) {
-		this.saleOrder = saleOrder;
 	}
 	public Double getAmountReceived() {
 		return amountReceived;
@@ -77,11 +60,11 @@ public class Receivables {
 	public void setExtend(String extend) {
 		this.extend = extend;
 	}
-	public PurchaseDelivery getPurchaseDelivery() {
-		return purchaseDelivery;
+	public Double getAmount() {
+		return amount;
 	}
-	public void setPurchaseDelivery(PurchaseDelivery purchaseDelivery) {
-		this.purchaseDelivery = purchaseDelivery;
+	public void setAmount(Double amount) {
+		this.amount = amount;
 	}
 	
 }
