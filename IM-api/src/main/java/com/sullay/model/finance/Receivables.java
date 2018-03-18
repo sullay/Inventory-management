@@ -1,5 +1,7 @@
 package com.sullay.model.finance;
 
+import java.util.Date;
+
 //应收款记录
 public class Receivables {
 	public static enum State {
@@ -18,6 +20,8 @@ public class Receivables {
 	private State state=State.INCOMPLETE;
 	//备注
 	private String extend;
+	//日期
+	private Date date;
 	public Integer getId() {
 		return id;
 	}
@@ -53,6 +57,12 @@ public class Receivables {
 	}
 	public void setAmount(Double amount) {
 		this.amount = amount;
+	}
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
 	}
 	
 }

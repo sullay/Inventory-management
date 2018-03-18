@@ -16,6 +16,10 @@ import com.sullay.model.finance.FinanceReceipt;
 public class FinanceReceiptController {
 	@Autowired
 	FinanceReceiptClient financeReceiptClient;
+	@RequestMapping(value="/",method=RequestMethod.POST)
+	public void create(@RequestBody FinanceReceipt financeReceipt) {
+		financeReceiptClient.create(financeReceipt);
+	}
 	@RequestMapping(value="/",method=RequestMethod.DELETE)
 	public void detele(@RequestBody FinanceReceipt financeReceipt) {
 		financeReceiptClient.detele(financeReceipt);

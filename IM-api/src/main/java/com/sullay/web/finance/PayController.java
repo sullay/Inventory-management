@@ -16,6 +16,11 @@ import com.sullay.model.finance.Pay;
 public class PayController {
 	@Autowired
 	PayClient payClient;
+
+	@RequestMapping(value="/",method=RequestMethod.POST)
+	public void create(@RequestBody Pay pay) {
+		payClient.create(pay);
+	}
 	@RequestMapping(value="/",method=RequestMethod.DELETE)
 	public void detele(@RequestBody Pay pay) {
 		payClient.detele(pay);
