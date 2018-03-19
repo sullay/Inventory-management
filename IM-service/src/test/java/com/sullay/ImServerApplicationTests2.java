@@ -122,7 +122,7 @@ public class ImServerApplicationTests2 {
 	public void test04() {
 		Receivables receivables = new Receivables();
 		receivables.setAmountReceived(1.0);
-		receivables.setCode("2");
+		receivables.setCode("1");
 		receivables.setExtend("1");
 		receivables.setState(com.sullay.model.finance.Receivables.State.INCOMPLETE);
 		receivables.setAmount(12.0);
