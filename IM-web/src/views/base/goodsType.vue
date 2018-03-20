@@ -2,7 +2,7 @@
   <div>
     <el-dialog
     :visible.sync="dialogVisible"
-    width="50%"
+    width="30%"
     :before-close="close" title="商品种类信息">
     <el-form :model="goodsType" label-width="100px">
     <el-form-item label="商品种类代号:">

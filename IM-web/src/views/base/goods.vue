@@ -2,9 +2,9 @@
   <div>
     <el-dialog
     :visible.sync="dialogVisible"
-    width="50%"
+    width="30%"
     :before-close="close" title="商品信息">
-    <el-form :model="goods" label-width="100px">
+    <el-form :model="goods" label-width="100px" size="small">
     <el-form-item label="商品编号:">
       <el-input placeholder="请输入商品编号" v-model="goods.code" autofocus></el-input>
     </el-form-item>
@@ -37,9 +37,15 @@
     <el-form-item label="品牌:">
       <el-input placeholder="请输入品牌" v-model="goods.brand"></el-input>
     </el-form-item>
+    <el-form-item label="最大数量:">
+    <el-input placeholder="请输入最大数量" v-model.number="goods.max"></el-input>
+    </el-form-item>
+    <el-form-item label="最小数量:">
+    <el-input placeholder="请输入最小数量" v-model.number="goods.min"></el-input>
+    </el-form-item>
     <el-form-item label="商品单价:">
-      <el-input placeholder="请输入商品单价" v-model="goods.price"  @keyup.native.enter="confirm" v-if="isAdd"></el-input>
-      <el-input placeholder="请输入商品单价" v-model="goods.price"  @keyup.native.enter="edit_confirm" v-else></el-input>
+      <el-input placeholder="请输入商品单价" v-model.number="goods.price"  @keyup.native.enter="confirm" v-if="isAdd"></el-input>
+      <el-input placeholder="请输入商品单价" v-model.number="goods.price"  @keyup.native.enter="edit_confirm" v-else></el-input>
     </el-form-item>
     </el-form>
     <span slot="footer">
@@ -121,7 +127,7 @@ export default {
       totalElements: null,
       data: {page: 0, size: 10},
       allGoods: [],
-      goods: {id: 0, code: '', name: '', specification: '', goodsType: {id: '', code: '', name: '', codingPrefix: ''}, unit: {id: '', code: '', description: ''}, brand: '', price: ''},
+      goods: {id: 0, code: '', name: '', specification: '', goodsType: {id: '', code: '', name: '', codingPrefix: ''}, unit: {id: '', code: '', description: ''}, brand: '', price: '', max: 0, min: 0},
       isAdd: true,
       goodsTypes: [],
       units: []
@@ -172,27 +178,35 @@ export default {
       this.jump()
     },
     confirm () {
-      this.goods.id = 0
-      postRequest('/goodsAPI/', this.goods)
-        .then(resp => {
-          this.jump()
-          this.dialogVisible = false
-        })
-        .catch(error => {
-          console.log(error)
-          this.$message.error('新增商品失败，商品编号不能重复')
-        })
+      if (this.goods.min > this.goods.max) {
+        this.$message.error('商品最小数量不能大于最大数量')
+      } else {
+        this.goods.id = 0
+        postRequest('/goodsAPI/', this.goods)
+          .then(resp => {
+            this.jump()
+            this.dialogVisible = false
+          })
+          .catch(error => {
+            console.log(error)
+            this.$message.error('新增商品失败，商品编号不能重复')
+          })
+      }
     },
     edit_confirm () {
-      putRequest('/goodsAPI/', this.goods)
-        .then(resp => {
-          this.jump()
-          this.dialogVisible = false
-        })
-        .catch(error => {
-          console.log(error)
-          this.$message.error('修改商品失败，商品编号不能重复')
-        })
+      if (this.goods.min > this.goods.max) {
+        this.$message.error('商品最小数量不能大于最大数量')
+      } else {
+        putRequest('/goodsAPI/', this.goods)
+          .then(resp => {
+            this.jump()
+            this.dialogVisible = false
+          })
+          .catch(error => {
+            console.log(error)
+            this.$message.error('修改商品失败，商品编号不能重复')
+          })
+      }
     },
     del (scope) {
       this.$confirm('此操作将永久删除, 是否继续?', '提示', {

@@ -13,7 +13,6 @@
       :formatter="formatter">
     </el-table-column>
     <el-table-column
-      fixed
       align="center"
       prop="code"
       label="交易单号">

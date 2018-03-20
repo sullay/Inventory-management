@@ -2,7 +2,7 @@
   <div>
   <el-dialog
     :visible.sync="dialogVisible"
-    width="50%"
+    width="30%"
     :before-close="close" title="新增计量单位">
     <el-form :model="unit" label-width="100px">
     <el-form-item label="库存单位代号:">

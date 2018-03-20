@@ -18,6 +18,10 @@ public class Goods {
 	private String brand;
 	//商品单价
 	private	Double price;
+	//最低库存量
+	private int min;
+	//最高库存量
+	private int max;
 	public Integer getId() {
 		return id;
 	}
@@ -67,5 +71,18 @@ public class Goods {
 	public void setPrice(Double price) {
 		this.price = price;
 	}
+	public int getMin() {
+		return min;
+	}
+	public void setMin(int min) {
+		this.min = min;
+	}
+	public int getMax() {
+		return max;
+	}
+	public void setMax(int max) {
+		this.max = max;
+	}
+	
 	
 }

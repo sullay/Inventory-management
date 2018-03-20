@@ -3,7 +3,7 @@ package com.sullay.model.sale;
 import java.util.Date;
 import java.util.Set;
 
-import com.sullay.model.finance.Receivables;
+import com.sullay.model.finance.Receivable;
 
 //销售订单
 public class SaleOrder {
@@ -27,7 +27,7 @@ public class SaleOrder {
 	//销售信息
 	private Set<SaleInfo> saleInfos;
 	//应收款记录
-	private Receivables receivables;
+	private Receivable receivable;
 	public Integer getId() {
 		return id;
 	}
@@ -70,11 +70,11 @@ public class SaleOrder {
 	public void setSaleInfos(Set<SaleInfo> saleInfos) {
 		this.saleInfos = saleInfos;
 	}
-	public Receivables getReceivables() {
-		return receivables;
+	public Receivable getReceivable() {
+		return receivable;
 	}
-	public void setReceivables(Receivables receivables) {
-		this.receivables = receivables;
+	public void setReceivable(Receivable receivable) {
+		this.receivable = receivable;
 	}
 
 	

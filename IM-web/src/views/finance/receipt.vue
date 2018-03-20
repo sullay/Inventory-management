@@ -2,11 +2,11 @@
   <div>
     <el-dialog
     :visible.sync="dialogVisible"
-    width="50%"
+    width="30%"
     :before-close="close" title="收款信息">
     <el-form :model="receipt" label-width="100px">
     <el-form-item label="应收款单号:">
-      <el-input placeholder="请输入应收款单号" v-model="receipt.receivables.code" disabled></el-input>
+      <el-input placeholder="请输入应收款单号" v-model="receipt.receivable.code" disabled></el-input>
     </el-form-item>
     <el-form-item label="付款金额:">
       <el-input placeholder="请输入收款金额" v-model.number="receipt.amount" autofocus></el-input>
@@ -34,7 +34,7 @@
     </el-table-column>
     <el-table-column
       align="center"
-      prop="receivables.code"
+      prop="receivable.code"
       label="应收款单号">
     </el-table-column>
     <el-table-column
@@ -81,12 +81,14 @@ export default {
       receipts: [],
       receipt: {
         id: 0,
-        receivables: {id: 0,
+        receivable: {id: 0,
           code: '',
           amountReceived: 0,
           amount: 0,
           state: '',
-          extend: ''},
+          extend: '',
+          date: 0,
+          dealer: ''},
         detail: {id: 0, date: 0, code: '', trader: '', income: 0, pay: 0, type: '', extend: ''},
         date: 0,
         amount: 0,
@@ -120,12 +122,12 @@ export default {
       this.jump()
     },
     edit_confirm () {
-      this.receipt.receivables.amountReceived = this.receipt.receivables.amountReceived - this.price + this.receipt.amount
+      this.receipt.receivable.amountReceived = this.receipt.receivable.amountReceived - this.price + this.receipt.amount
       this.receipt.date = new Date()
-      if (this.receipt.receivables.amountReceived >= this.receipt.receivables.amount) {
-        this.receipt.receivables.state = 'COMPLETE'
+      if (this.receipt.receivable.amountReceived >= this.receipt.receivable.amount) {
+        this.receipt.receivable.state = 'COMPLETE'
       } else {
-        this.receipt.receivables.state = 'INCOMPLETE'
+        this.receipt.receivable.state = 'INCOMPLETE'
       }
       this.receipt.detail.date = this.receipt.date
       this.receipt.detail.extend = this.receipt.extend
@@ -147,11 +149,11 @@ export default {
         cancelButtonText: '取消',
         type: 'error'
       }).then(() => {
-        scope.row.receivables.amountReceived = scope.row.receivables.amountReceived - scope.row.amount
-        if (scope.row.receivables.amountReceived >= scope.row.receivables.amount) {
-          scope.row.receivables.state = 'COMPLETE'
+        scope.row.receivable.amountReceived = scope.row.receivable.amountReceived - scope.row.amount
+        if (scope.row.receivable.amountReceived >= scope.row.receivable.amount) {
+          scope.row.receivable.state = 'COMPLETE'
         } else {
-          scope.row.receivables.state = 'INCOMPLETE'
+          scope.row.receivable.state = 'INCOMPLETE'
         }
         putRequest('/financeReceiptAPI/', scope.row)
           .then(resp => {

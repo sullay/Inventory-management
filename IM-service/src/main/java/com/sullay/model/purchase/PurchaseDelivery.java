@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.sullay.model.Water;
-import com.sullay.model.finance.Receivables;
+import com.sullay.model.finance.Receivable;
 
 //采购退货单
 @Entity
@@ -41,7 +41,7 @@ public class PurchaseDelivery {
 	//应收款记录
 	@OneToOne(cascade= {CascadeType.ALL},fetch=FetchType.EAGER)
 	@JoinColumn(name="rid")
-	private Receivables receivables;
+	private Receivable receivable;
 	public Integer getId() {
 		return id;
 	}
@@ -79,11 +79,11 @@ public class PurchaseDelivery {
 	public void setWaters(Set<Water> waters) {
 		this.waters = waters;
 	}
-	public Receivables getReceivables() {
-		return receivables;
+	public Receivable getReceivable() {
+		return receivable;
 	}
-	public void setReceivables(Receivables receivables) {
-		this.receivables = receivables;
+	public void setReceivable(Receivable receivable) {
+		this.receivable = receivable;
 	}
 	
 }

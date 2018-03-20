@@ -19,7 +19,7 @@ public class FinanceReceipt {
 	private Integer id;
 	@ManyToOne(cascade= {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH},fetch=FetchType.EAGER)
 	@JoinColumn(name="Rid")
-	private Receivables receivables;
+	private Receivable receivable;
 	//日期
 	private Date date;
 	//收款金额
@@ -37,11 +37,11 @@ public class FinanceReceipt {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Receivables getReceivables() {
-		return receivables;
+	public Receivable getReceivable() {
+		return receivable;
 	}
-	public void setReceivables(Receivables receivables) {
-		this.receivables = receivables;
+	public void setReceivable(Receivable receivable) {
+		this.receivable = receivable;
 	}
 	public Date getDate() {
 		return date;

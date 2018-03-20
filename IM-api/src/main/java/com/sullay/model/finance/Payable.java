@@ -22,6 +22,7 @@ public class Payable {
 	private String extend;
 	//日期
 	private Date date;
+	private String dealer;
 	public Integer getId() {
 		return id;
 	}
@@ -63,6 +64,12 @@ public class Payable {
 	}
 	public void setDate(Date date) {
 		this.date = date;
+	}
+	public String getDealer() {
+		return dealer;
+	}
+	public void setDealer(String dealer) {
+		this.dealer = dealer;
 	}
 	
 	

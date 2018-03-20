@@ -2,7 +2,7 @@
   <div>
     <el-dialog
     :visible.sync="dialogVisible"
-    width="50%"
+    width="30%"
     :before-close="close" title="付款信息">
     <el-form :model="pay" label-width="100px">
     <el-form-item label="应付款单号:">
@@ -86,7 +86,9 @@ export default {
           amountPaid: 0,
           amount: 0,
           state: '',
-          extend: ''},
+          extend: '',
+          date: 0,
+          dealer: ''},
         detail: {id: 0, date: 0, code: '', trader: '', income: 0, pay: 0, type: '', extend: ''},
         date: 0,
         amount: 0,

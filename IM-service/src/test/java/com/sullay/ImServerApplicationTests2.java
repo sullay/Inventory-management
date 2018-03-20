@@ -14,7 +14,7 @@ import com.sullay.model.finance.FinanceReceipt;
 import com.sullay.model.finance.Pay;
 import com.sullay.model.finance.Payable;
 import com.sullay.model.finance.Payable.State;
-import com.sullay.model.finance.Receivables;
+import com.sullay.model.finance.Receivable;
 import com.sullay.service.DocumentsService;
 import com.sullay.service.GoodsService;
 import com.sullay.service.UnitService;
@@ -120,24 +120,24 @@ public class ImServerApplicationTests2 {
 	}
 	@Test
 	public void test04() {
-		Receivables receivables = new Receivables();
-		receivables.setAmountReceived(1.0);
-		receivables.setCode("1");
-		receivables.setExtend("1");
-		receivables.setState(com.sullay.model.finance.Receivables.State.INCOMPLETE);
-		receivables.setAmount(12.0);
+		Receivable receivable = new Receivable();
+		receivable.setAmountReceived(1.0);
+		receivable.setCode("1");
+		receivable.setExtend("1");
+		receivable.setState(com.sullay.model.finance.Receivable.State.INCOMPLETE);
+		receivable.setAmount(12.0);
 		FinanceReceipt financeReceipt = new FinanceReceipt();
 		financeReceipt.setDate(new Date());
 		financeReceipt.setExtend("1");
 		financeReceipt.setAmount(1.0);
-		financeReceipt.setReceivables(receivables);
+		financeReceipt.setReceivable(receivable);
 		Detail detail = new Detail();
-		detail.setCode(financeReceipt.getReceivables().getCode());
+		detail.setCode(financeReceipt.getReceivable().getCode());
 		detail.setDate(new Date());
 		detail.setExtend("1");
 		detail.setIncome(financeReceipt.getAmount());
 		detail.setTrader("1");
-		detail.setType("付款");
+		detail.setType("收款");
 		financeReceipt.setDetail(detail);
 		financeReceiptService.create(financeReceipt);
 	}

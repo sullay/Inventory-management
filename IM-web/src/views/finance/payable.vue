@@ -2,7 +2,7 @@
   <div>
    <el-dialog
     :visible.sync="dialogVisible"
-    width="50%"
+    width="30%"
     :before-close="close" title="付款信息">
     <el-form :model="pay" label-width="100px">
     <el-form-item label="应付款单号:">
@@ -36,6 +36,11 @@
       align="center"
       prop="code"
       label="应付款单号">
+    </el-table-column>
+    <el-table-column
+      align="center"
+      prop="dealer"
+      label="交易商">
     </el-table-column>
     <el-table-column
       align="center"
@@ -95,7 +100,8 @@ export default {
         amount: 0,
         state: '',
         extend: '',
-        date: 0},
+        date: 0,
+        dealer: ''},
       pay: {
         id: 0,
         payable: {id: 0,
@@ -103,7 +109,9 @@ export default {
           amountPaid: 0,
           amount: 0,
           state: '',
-          extend: ''},
+          extend: '',
+          date: 0,
+          dealer: ''},
         detail: {id: 0, date: 0, code: '', trader: '', income: 0, pay: 0, type: '', extend: ''},
         date: 0,
         amount: 0,
@@ -163,10 +171,13 @@ export default {
         this.pay.payable.state = 'INCOMPLETE'
       }
       this.pay.detail.id = 0
+      this.pay.detail.code = this.pay.payable.code
       this.pay.detail.date = this.pay.date
       this.pay.detail.extend = this.pay.extend
       this.pay.detail.income = 0
       this.pay.detail.pay = this.pay.amount
+      this.pay.detail.type = '付款'
+      this.pay.detail.trader = this.pay.payable.dealer
       postRequest('/payAPI/', this.pay)
         .then(resp => {
           this.jump()
