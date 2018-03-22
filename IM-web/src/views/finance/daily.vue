@@ -97,7 +97,7 @@ export default {
       totalElements: null,
       data: {page: 0, size: 10},
       dailys: [],
-      daily: {id: 0, type: '', trader: '', amount: '', extend: '', date: 0, detail: {id: 0, date: 0, code: '', trader: '', income: 0, pay: 0, type: '', extend: ''}},
+      daily: {id: 0, type: '', trader: '', amount: null, extend: '', date: 0, detail: {id: 0, date: 0, code: '', trader: '', income: 0, pay: 0, type: '', extend: ''}},
       isAdd: true,
       type: ['收入', '支出']
     }

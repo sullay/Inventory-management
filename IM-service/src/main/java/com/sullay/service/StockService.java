@@ -28,4 +28,11 @@ public class StockService {
 		Pageable pageable = new PageRequest(page, size, new Sort(Direction.DESC, "goods"));
 		return stockRepository.findAll(pageable);
 	}
+	public Stock findByGoodsIdAndWarehouseId(int gid, int wid) {
+		return stockRepository.findByGoodsIdAndWarehouseId(gid, wid);
+	}
+	public Page<Stock> findWarning(int page,int size){
+		Pageable pageable = new PageRequest(page, size, new Sort(Direction.DESC, "goods"));
+		return stockRepository.findWarning(pageable);
+	}
 }

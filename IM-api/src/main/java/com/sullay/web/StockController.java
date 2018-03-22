@@ -18,4 +18,12 @@ public class StockController {
 	public Msg findAll(@RequestParam("page")int page,@RequestParam("size")int size) {
 		return stockClient.findAll(page, size);
 	}
+	@RequestMapping(value="/",method=RequestMethod.GET)
+	public Msg findByGoodsIdAndWarehouseId(@RequestParam("gid")int gid, @RequestParam("wid")int wid) {
+		return stockClient.findByGoodsIdAndWarehouseId(gid, wid);
+	}
+	@RequestMapping(value="/warning",method=RequestMethod.GET)
+	public Msg findWarning(@RequestParam("page")int page,@RequestParam("size")int size) {
+		return stockClient.findWarning(page, size);
+	}
 }

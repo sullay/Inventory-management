@@ -1,5 +1,7 @@
 package com.sullay;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,5 +85,10 @@ public class ImServerApplicationTests {
 		Unit unit = new Unit();
 		unit.setId(1);
 		unitRepository.delete(unit);
+	}
+	@Test
+	public void test07() {
+		Stock stock = stockRepository.findByGoodsIdAndWarehouseId(1, 1);
+		System.out.println(stock.getGoods().getName()+stock.getWarehouse().getName());
 	}
 }

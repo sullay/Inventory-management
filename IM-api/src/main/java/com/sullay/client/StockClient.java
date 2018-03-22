@@ -20,4 +20,8 @@ public interface StockClient {
 	public void update(@RequestBody Stock stock);
 	@RequestMapping(value="/all",method=RequestMethod.GET)
 	public Msg findAll(@RequestParam("page")int page,@RequestParam("size")int size);
+	@RequestMapping(value="/",method=RequestMethod.GET)
+	public Msg findByGoodsIdAndWarehouseId(@RequestParam("gid")int gid, @RequestParam("wid")int wid);
+	@RequestMapping(value="/warning",method=RequestMethod.GET)
+	public Msg findWarning(@RequestParam("page")int page,@RequestParam("size")int size);
 }

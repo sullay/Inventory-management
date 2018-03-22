@@ -2,7 +2,9 @@ package com.sullay.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -13,16 +15,8 @@ public class Water {
 	@Id
 	@GeneratedValue
 	private Integer id;
-	//所在仓库
-	@ManyToOne
-	@JoinColumn(name="Wid")
-	private Warehouse warehouse;
 	//单号
 	private String documentCode;
-	//商品
-	@ManyToOne
-	@JoinColumn(name="Gid")
-	private Goods goods;
 	//单据名称
 	private String documentName;
 	//日期
@@ -31,31 +25,20 @@ public class Water {
 	private int receiptNum;
 	//出库数量
 	private int deliveryNum;
-	//当时库存
-	private int nowNum;
+	@ManyToOne(cascade= {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH},fetch=FetchType.EAGER)
+	@JoinColumn(name="sid")
+	private Stock stock;
 	public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Warehouse getWarehouse() {
-		return warehouse;
-	}
-	public void setWarehouse(Warehouse warehouse) {
-		this.warehouse = warehouse;
-	}
 	public String getDocumentCode() {
 		return documentCode;
 	}
 	public void setDocumentCode(String documentCode) {
 		this.documentCode = documentCode;
-	}
-	public Goods getGoods() {
-		return goods;
-	}
-	public void setGoods(Goods goods) {
-		this.goods = goods;
 	}
 	public String getDocumentName() {
 		return documentName;
@@ -81,11 +64,11 @@ public class Water {
 	public void setDeliveryNum(int deliveryNum) {
 		this.deliveryNum = deliveryNum;
 	}
-	public int getNowNum() {
-		return nowNum;
+	public Stock getStock() {
+		return stock;
 	}
-	public void setNowNum(int nowNum) {
-		this.nowNum = nowNum;
+	public void setStock(Stock stock) {
+		this.stock = stock;
 	}
 	
 }

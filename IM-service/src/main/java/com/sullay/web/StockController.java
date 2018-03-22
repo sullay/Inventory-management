@@ -33,4 +33,12 @@ public class StockController {
 	public Msg findAll(@RequestParam("page")int page,@RequestParam("size")int size) {
 		return Msg.success().add("pageInfo", stockService.findAll(page, size));
 	}
+	@RequestMapping(value="/",method=RequestMethod.GET)
+	public Msg findByGoodsIdAndWarehouseId(@RequestParam("gid")int gid, @RequestParam("wid")int wid) {
+		return Msg.success().add("pageInfo", stockService.findByGoodsIdAndWarehouseId(gid, wid));
+	}
+	@RequestMapping(value="/warning",method=RequestMethod.GET)
+	public Msg findWarning(@RequestParam("page")int page,@RequestParam("size")int size) {
+		return Msg.success().add("pageInfo", stockService.findWarning(page, size));
+	}
 }

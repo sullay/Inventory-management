@@ -127,7 +127,7 @@ export default {
       totalElements: null,
       data: {page: 0, size: 10},
       allGoods: [],
-      goods: {id: 0, code: '', name: '', specification: '', goodsType: {id: '', code: '', name: '', codingPrefix: ''}, unit: {id: '', code: '', description: ''}, brand: '', price: '', max: 0, min: 0},
+      goods: {id: 0, code: '', name: '', specification: '', goodsType: {id: '', code: '', name: '', codingPrefix: ''}, unit: {id: '', code: '', description: ''}, brand: '', price: '', max: null, min: null},
       isAdd: true,
       goodsTypes: [],
       units: []
