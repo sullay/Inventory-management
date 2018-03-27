@@ -4,6 +4,7 @@ import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sullay.model.Documents;
 import com.sullay.model.Msg;
@@ -19,4 +20,6 @@ public interface DocumentsClient {
 	public void update(@RequestBody Documents documents);
 	@RequestMapping(value="/all",method=RequestMethod.GET)
 	public Msg findAll();
+	@RequestMapping(value="/",method=RequestMethod.GET)
+	public Msg findByName(@RequestParam("name")String name);
 }

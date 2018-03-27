@@ -31,6 +31,6 @@ public class PurchaseReceiptController {
 	}
 	@RequestMapping(value="/all",method=RequestMethod.GET)
 	public Msg findAll(@RequestParam("page")int page,@RequestParam("size")int size) {
-		return Msg.success().add("pageReceipt", purchaseReceiptService.findAll(page, size));
+		return Msg.success().add("pageInfo", purchaseReceiptService.findAll(page, size));
 	}
 }

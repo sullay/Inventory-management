@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sullay.model.Documents;
@@ -31,5 +32,9 @@ public class DocumentsController {
 	@RequestMapping(value="/all",method=RequestMethod.GET)
 	public Msg findAll() {
 		return Msg.success().add("pageInfo", documentsService.findAll());
+	}
+	@RequestMapping(value="/",method=RequestMethod.GET)
+	public Msg findByName(@RequestParam("name")String name) {
+		return Msg.success().add("pageInfo", documentsService.findByName(name));
 	}
 }

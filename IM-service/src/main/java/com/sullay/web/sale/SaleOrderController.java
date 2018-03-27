@@ -31,6 +31,6 @@ public class SaleOrderController {
 	}
 	@RequestMapping(value="/all",method=RequestMethod.GET)
 	public Msg findAll(@RequestParam("page")int page,@RequestParam("size")int size) {
-		return Msg.success().add("pageOrder", saleOrderService.findAll(page, size));
+		return Msg.success().add("pageInfo", saleOrderService.findAll(page, size));
 	}
 }

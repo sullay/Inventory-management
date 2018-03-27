@@ -24,4 +24,7 @@ public class DocumentsService {
 	public List<Documents> findAll(){
 		return documentsRepository.findAll();
 	}
+	public Documents findByName(String name){
+		return documentsRepository.findByName(name);
+	}
 }

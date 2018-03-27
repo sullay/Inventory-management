@@ -1,3 +1,12 @@
 <template>
-  <h1>x</h1>
+  <h1>{{this.x}}</h1>
 </template>
+<script>
+export default {
+  data () {
+    return {
+      x: 'xxxxxxxxxx'
+    }
+  }
+}
+</script>
