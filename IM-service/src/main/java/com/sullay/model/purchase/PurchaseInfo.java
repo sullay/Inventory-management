@@ -33,7 +33,7 @@ public class PurchaseInfo {
 	//备注
 	private String extend;
 	//采购订单
-	@ManyToOne(cascade= {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH},fetch=FetchType.EAGER)
+	@ManyToOne(cascade= {CascadeType.MERGE,CascadeType.REFRESH},fetch=FetchType.EAGER)
 	@JoinColumn(name="Pid")
 	private PurchaseOrder purchaseOrder;
 	public Integer getId() {

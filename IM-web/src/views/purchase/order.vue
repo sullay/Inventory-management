@@ -29,10 +29,11 @@
     </el-form-item>
     </el-col>
     </el-row>
-    <el-form-item label="商品信息:" v-for="(purchaseInfo, index) in PurchaseOrder.purchaseInfos" :key="index">
+    <div v-for="purchaseInfo in PurchaseOrder.purchaseInfos" :key="purchaseInfo.id">
+    <el-form-item label="商品信息:">
       <el-row>
       <el-col :span="12">
-        <el-select v-model="purchaseInfo.gid" filterable placeholder="请选择商品">
+        <el-select v-model="purchaseInfo.goods.id" filterable placeholder="请选择商品">
           <el-option
             v-for="item in goodsAll"
             :key="item.id"
@@ -51,20 +52,27 @@
       </el-row>
       <el-row>
       <el-col :span="8">
-        <el-input placeholder="请输入订单数量" v-model="purchaseInfo.number"></el-input>
+        <el-input placeholder="请输入订单数量" v-model="purchaseInfo.number">
+          <template slot="prepend">数量</template>
+        </el-input>
       </el-col>
       <el-col :span="8" :offset="4">
-        <el-input placeholder="请输入采购价格" v-model="purchaseInfo.price"></el-input>
+        <el-input placeholder="请输入采购价格" v-model="purchaseInfo.price">
+          <template slot="prepend">价格</template>
+        </el-input>
       </el-col>
       <el-col :span="20">
-        <el-input placeholder="请输入备注" v-model="purchaseInfo.extend"></el-input>
+        <el-input placeholder="请输入备注" v-model="purchaseInfo.extend">
+          <template slot="prepend">备注</template>
+        </el-input>
       </el-col>
       <el-col :span="8" :offset="8">
         <el-button @click.prevent="removePurchaseInfo(purchaseInfo)" type="danger">删除</el-button>
       </el-col>
       </el-row>
     </el-form-item>
-      <el-button @click.prevent="addPurchaseInfo">新增采购信息</el-button>
+    </div>
+      <el-button @click.prevent="addPurchaseInfo" type="success">新增采购信息</el-button>
     </el-form>
     <span slot="footer">
       <el-button @click="close">取 消</el-button>
@@ -190,7 +198,7 @@ export default {
     },
     add () {
       this.isAdd = true
-      this.PurchaseOrder = {purchaseInfos: []}
+      this.PurchaseOrder = {purchaseInfos: [{goods: {id: null}}]}
       this.dialogVisible = true
     },
     close () {
@@ -201,9 +209,17 @@ export default {
       this.PurchaseOrder.id = 0
       this.PurchaseOrder.date = new Date()
       this.PurchaseOrder.state = 'INCOMPLETE'
+      this.PurchaseOrder.payable = {
+        id: 0,
+        code: this.PurchaseOrder.code,
+        amountPaid: 0,
+        amount: 0,
+        state: 'INCOMPLETE',
+        extend: this.PurchaseOrder.extend,
+        date: new Date(),
+        dealer: this.PurchaseOrder.supplier}
       this.PurchaseOrder.purchaseInfos.forEach(purchaseInfo => {
-        purchaseInfo.goods = this.goods
-        purchaseInfo.goods.id = purchaseInfo.gid
+        this.PurchaseOrder.payable.amount += purchaseInfo.price * purchaseInfo.number
       })
       postRequest('/purchaseOrderAPI/', this.PurchaseOrder)
         .then(resp => {
@@ -216,6 +232,18 @@ export default {
         })
     },
     edit_confirm () {
+      this.PurchaseOrder.payable.code = this.PurchaseOrder.code
+      this.PurchaseOrder.payable.extend = this.PurchaseOrder.extend
+      this.PurchaseOrder.payable.dealer = this.PurchaseOrder.supplier
+      this.PurchaseOrder.payable.amount = 0
+      this.PurchaseOrder.purchaseInfos.forEach(purchaseInfo => {
+        this.PurchaseOrder.payable.amount += purchaseInfo.price * purchaseInfo.number
+      })
+      if (this.PurchaseOrder.payable.amountPaid >= this.PurchaseOrder.payable.amount) {
+        this.PurchaseOrder.payable.state = 'COMPLETE'
+      } else {
+        this.PurchaseOrder.payable.state = 'INCOMPLETE'
+      }
       putRequest('/purchaseOrderAPI/', this.PurchaseOrder)
         .then(resp => {
           this.jump()
@@ -276,7 +304,7 @@ export default {
     },
     addPurchaseInfo () {
       this.PurchaseOrder.purchaseInfos.push({
-
+        goods: {id: null}
       })
     }
   },
@@ -297,5 +325,4 @@ export default {
     margin-left: 15px;
     margin-right: 15px
   }
-  .el-input{}
 </style>

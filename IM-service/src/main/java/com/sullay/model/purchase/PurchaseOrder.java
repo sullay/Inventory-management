@@ -45,7 +45,7 @@ public class PurchaseOrder {
 	@Enumerated(EnumType.ORDINAL)
 	private State state=State.INCOMPLETE;
 	//采购信息
-	@OneToMany(mappedBy="purchaseOrder",cascade= {CascadeType.ALL},fetch=FetchType.EAGER)
+	@OneToMany(cascade= {CascadeType.ALL},fetch=FetchType.EAGER)
 	private Set<PurchaseInfo> purchaseInfos;
 	//应付款记录
 	@OneToOne(cascade= {CascadeType.ALL},fetch=FetchType.EAGER)
