@@ -36,7 +36,7 @@ public class PurchaseDelivery {
 	private Date date;
 	//库存流水账
 	@OneToMany(cascade= {CascadeType.ALL},fetch=FetchType.EAGER)
-	@JoinColumn(name="PurchaseReceipt_id")
+	@JoinColumn(name="PurchaseDelivery_id")
 	private Set<Water> waters;
 	//应收款记录
 	@OneToOne(cascade= {CascadeType.ALL},fetch=FetchType.EAGER)

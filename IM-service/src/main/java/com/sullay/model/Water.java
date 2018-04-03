@@ -25,9 +25,12 @@ public class Water {
 	private int receiptNum;
 	//出库数量
 	private int deliveryNum;
-	@ManyToOne(cascade= {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH},fetch=FetchType.EAGER)
+	@ManyToOne(cascade= {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH,CascadeType.DETACH},fetch=FetchType.EAGER)
 	@JoinColumn(name="sid")
 	private Stock stock;
+//	@ManyToOne(cascade= {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH},fetch=FetchType.EAGER)
+//	@JoinColumn(name="PurchaseReceipt_id")
+//	private PurchaseReceipt purchaseReceipt;
 	public Integer getId() {
 		return id;
 	}
@@ -70,5 +73,11 @@ public class Water {
 	public void setStock(Stock stock) {
 		this.stock = stock;
 	}
+//	public PurchaseReceipt getPurchaseReceipt() {
+//		return purchaseReceipt;
+//	}
+//	public void setPurchaseReceipt(PurchaseReceipt purchaseReceipt) {
+//		this.purchaseReceipt = purchaseReceipt;
+//	}
 	
 }

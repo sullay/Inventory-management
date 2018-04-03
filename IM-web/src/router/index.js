@@ -115,7 +115,7 @@ export default new Router({
         },
         {
           path: '/home/purchase/delivery',
-          name: '采购出库单',
+          name: '采购退货单',
           component: PurchaseDelivery,
           meta: {
             index: '2-3'

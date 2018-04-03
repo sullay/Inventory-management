@@ -33,4 +33,8 @@ public class WarehouseController {
 	public Msg findAll(@RequestParam("page")int page,@RequestParam("size")int size) {
 		return Msg.success().add("pageInfo", warehouseService.findAll(page, size));
 	}
+	@RequestMapping(value="/all_NoPage",method=RequestMethod.GET)
+	public Msg findAll() {
+		return Msg.success().add("pageInfo", warehouseService.findAll());
+	}
 }

@@ -25,4 +25,7 @@ public class PurchaseOrderService {
 		Pageable pageable = new PageRequest(page, size);
 		return purchaseOrderRepository.findAll(pageable);
 	}
+	public PurchaseOrder findById(Integer id) {
+		return purchaseOrderRepository.findById(id);
+	}
 }

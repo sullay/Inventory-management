@@ -25,7 +25,7 @@ public class PurchaseReceipt {
 	@Column(unique=true,nullable=false)
 	private String code;
 	//采购订单
-	@ManyToOne
+	@ManyToOne(cascade= {CascadeType.MERGE,CascadeType.REFRESH,CascadeType.PERSIST},fetch=FetchType.EAGER)
 	@JoinColumn(name="Pid")
 	private PurchaseOrder purchaseOrder;
 	//备注

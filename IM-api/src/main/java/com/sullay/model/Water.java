@@ -16,6 +16,7 @@ public class Water {
 	private int deliveryNum;
 	
 	private Stock stock;
+	
 	public Integer getId() {
 		return id;
 	}

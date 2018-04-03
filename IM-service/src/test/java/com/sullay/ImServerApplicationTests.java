@@ -11,12 +11,15 @@ import com.sullay.model.GoodsType;
 import com.sullay.model.Stock;
 import com.sullay.model.Unit;
 import com.sullay.model.Warehouse;
+import com.sullay.model.purchase.PurchaseOrder;
+import com.sullay.model.purchase.PurchaseReceipt;
 import com.sullay.repository.GoodsRepository;
 import com.sullay.repository.GoodsTypeRepository;
 import com.sullay.repository.StockRepository;
 import com.sullay.repository.UnitRepository;
 import com.sullay.repository.WarehouseRepository;
 import com.sullay.service.UnitService;
+import com.sullay.service.purchase.PurchaseReceiptService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -33,6 +36,8 @@ public class ImServerApplicationTests {
 	GoodsTypeRepository goodsTypeRepository;
 	@Autowired
 	UnitService unitService;
+	@Autowired
+	PurchaseReceiptService purchaseReceiptService;
 	@Test
 	public void test01() {
 		Stock stock = new Stock();
@@ -88,5 +93,14 @@ public class ImServerApplicationTests {
 	public void test07() {
 		Stock stock = stockRepository.findByGoodsIdAndWarehouseId(1, 1);
 		System.out.println(stock.getGoods().getName()+stock.getWarehouse().getName());
+	}
+	@Test
+	public void test09() {
+		PurchaseReceipt purchaseReceipt = new PurchaseReceipt();
+		PurchaseOrder purchaseOrder = new PurchaseOrder();
+		purchaseOrder.setId(28);
+		purchaseReceipt.setPurchaseOrder(purchaseOrder);
+		purchaseReceipt.setCode("dsdasd");
+		purchaseReceiptService.create(purchaseReceipt);
 	}
 }

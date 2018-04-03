@@ -1,5 +1,7 @@
 package com.sullay.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,5 +27,8 @@ public class WarehouseService {
 	public Page<Warehouse> findAll(int page,int size){
 		Pageable pageable = new PageRequest(page, size);
 		return warehouseRepository.findAll(pageable);
+	}
+	public List<Warehouse> findAll(){
+		return warehouseRepository.findAll();
 	}
 }

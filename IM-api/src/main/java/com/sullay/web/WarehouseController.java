@@ -33,4 +33,9 @@ public class WarehouseController {
 	public void update(@RequestBody Warehouse warehouse) {
 		warehouseClient.update(warehouse);
 	}
+
+	@RequestMapping(value="/all_NoPage",method=RequestMethod.GET)
+	public Msg findAll() {
+		return warehouseClient.findAll();
+	}
 }
