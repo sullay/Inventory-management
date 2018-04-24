@@ -11,8 +11,8 @@ public class PurchaseDelivery {
 	private Integer id;
 	//退货单号
 	private String code;
-	//采购信息
-	private PurchaseInfo purchaseInfo;
+	//采购订单
+	private PurchaseOrder purchaseOrder;
 	//备注
 	private String extend;
 	//单据日期
@@ -34,11 +34,12 @@ public class PurchaseDelivery {
 		this.code = code;
 	}
 	
-	public PurchaseInfo getPurchaseInfo() {
-		return purchaseInfo;
+	
+	public PurchaseOrder getPurchaseOrder() {
+		return purchaseOrder;
 	}
-	public void setPurchaseInfo(PurchaseInfo purchaseInfo) {
-		this.purchaseInfo = purchaseInfo;
+	public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
+		this.purchaseOrder = purchaseOrder;
 	}
 	public String getExtend() {
 		return extend;

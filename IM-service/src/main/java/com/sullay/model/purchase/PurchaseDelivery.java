@@ -26,10 +26,10 @@ public class PurchaseDelivery {
 	//退货单号
 	@Column(unique=true,nullable=false)
 	private String code;
-	//采购信息
-	@ManyToOne
+	//采购订单
+	@ManyToOne(cascade= {CascadeType.MERGE,CascadeType.REFRESH,CascadeType.PERSIST},fetch=FetchType.EAGER)
 	@JoinColumn(name="Pid")
-	private PurchaseInfo purchaseInfo;
+	private PurchaseOrder purchaseOrder;
 	//备注
 	private String extend;
 	//单据日期
@@ -55,11 +55,12 @@ public class PurchaseDelivery {
 		this.code = code;
 	}
 	
-	public PurchaseInfo getPurchaseInfo() {
-		return purchaseInfo;
+	
+	public PurchaseOrder getPurchaseOrder() {
+		return purchaseOrder;
 	}
-	public void setPurchaseInfo(PurchaseInfo purchaseInfo) {
-		this.purchaseInfo = purchaseInfo;
+	public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
+		this.purchaseOrder = purchaseOrder;
 	}
 	public String getExtend() {
 		return extend;

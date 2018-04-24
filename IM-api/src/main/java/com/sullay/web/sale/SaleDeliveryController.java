@@ -12,7 +12,7 @@ import com.sullay.model.Msg;
 import com.sullay.model.sale.SaleDelivery;
 
 @RestController
-@RequestMapping("/saleDelivery")
+@RequestMapping("/saleDeliveryAPI")
 public class SaleDeliveryController {
 	@Autowired
 	SaleDeliveryClient saleDeliveryClient;

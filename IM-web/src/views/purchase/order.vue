@@ -355,6 +355,12 @@ export default {
       } else {
         this.purchaseOrder.payable.state = 'INCOMPLETE'
       }
+      this.purchaseOrder.state = 'COMPLETE'
+      this.purchaseOrder.purchaseInfos.forEach(purchaseInfo => {
+        if (purchaseInfo.arrivals < purchaseInfo.number) {
+          this.purchaseOrder.state = 'INCOMPLETE'
+        }
+      })
       putRequest('/purchaseOrderAPI/', this.purchaseOrder)
         .then(resp => {
           this.jump()

@@ -27,9 +27,9 @@ public class SaleReceipt {
 	@Column(unique=true,nullable=false)
 	private String code;
 	//销售订单
-	@ManyToOne
+	@ManyToOne(cascade= {CascadeType.MERGE,CascadeType.REFRESH,CascadeType.PERSIST},fetch=FetchType.EAGER)
 	@JoinColumn(name="Sid")
-	private SaleInfo saleInfo;
+	private SaleOrder saleOrder;
 	//备注
 	private String extend;
 	//单据日期
@@ -56,11 +56,12 @@ public class SaleReceipt {
 		this.code = code;
 	}
 	
-	public SaleInfo getSaleInfo() {
-		return saleInfo;
+	
+	public SaleOrder getSaleOrder() {
+		return saleOrder;
 	}
-	public void setSaleInfo(SaleInfo saleInfo) {
-		this.saleInfo = saleInfo;
+	public void setSaleOrder(SaleOrder saleOrder) {
+		this.saleOrder = saleOrder;
 	}
 	public String getExtend() {
 		return extend;

@@ -24,8 +24,8 @@ public class SaleDelivery {
 	//销售出库单号
 	@Column(unique=true,nullable=false)
 	private String code;
-	//销售信息
-	@ManyToOne
+	//销售订单
+	@ManyToOne(cascade= {CascadeType.MERGE,CascadeType.REFRESH,CascadeType.PERSIST},fetch=FetchType.EAGER)
 	@JoinColumn(name="Sid")
 	private SaleOrder saleOrder;
 	//备注
