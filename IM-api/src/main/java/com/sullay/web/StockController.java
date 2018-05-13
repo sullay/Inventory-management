@@ -18,6 +18,10 @@ public class StockController {
 	public Msg findAll(@RequestParam("page")int page,@RequestParam("size")int size) {
 		return stockClient.findAll(page, size);
 	}
+	@RequestMapping(value="/listByGoods",method=RequestMethod.GET)
+	public Msg findByGoodsId(int gid){
+		return stockClient.findByGoodsId(gid);
+	}
 	@RequestMapping(value="/",method=RequestMethod.GET)
 	public Msg findByGoodsIdAndWarehouseId(@RequestParam("gid")int gid, @RequestParam("wid")int wid) {
 		return stockClient.findByGoodsIdAndWarehouseId(gid, wid);

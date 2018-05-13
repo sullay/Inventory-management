@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.sullay.model.Goods;
 import com.sullay.model.Msg;
 import com.sullay.service.GoodsService;
@@ -35,5 +36,9 @@ public class GoodsController {
 	@RequestMapping(value="/all_NoPage",method=RequestMethod.GET)
 	public Msg findAll() {
 		return Msg.success().add("pageInfo", goodsService.findAll());
+	}
+	@RequestMapping(value="/search",method=RequestMethod.GET)
+	public Msg search(@RequestParam("page")int page,@RequestParam("size")int size,@RequestParam(name="goodsName",required=false)String goodsName,@RequestParam(name="goodsTypeId",required=false)int goodsTypeId,@RequestParam(name="brand",required=false)String brand) {
+		return Msg.success().add("pageInfo", goodsService.search(page, size, goodsName, goodsTypeId, brand));
 	}
 }

@@ -12,11 +12,11 @@ import PurchaseDelivery from '../views/purchase/delivery.vue'
 import SaleOrder from '../views/sale/order.vue'
 import SaleReceipt from '../views/sale/receipt.vue'
 import SaleDelivery from '../views/sale/delivery.vue'
-import Transfer from '../views/other/transfer.vue'
-import InReceipt from '../views/other/inReceipt.vue'
-import InDelivery from '../views/other/inDelivery.vue'
-import OtherReceipt from '../views/other/receipt.vue'
-import OtherDelivery from '../views/other/delivery.vue'
+// import Transfer from '../views/other/transfer.vue'
+// import InReceipt from '../views/other/inReceipt.vue'
+// import InDelivery from '../views/other/inDelivery.vue'
+// import OtherReceipt from '../views/other/receipt.vue'
+// import OtherDelivery from '../views/other/delivery.vue'
 import StockDetail from '../views/stock/detail.vue'
 import Warning from '../views/stock/warning.vue'
 import Water from '../views/stock/water.vue'
@@ -157,56 +157,56 @@ export default new Router({
         }
       ]
     },
-    {
-      path: '/home',
-      name: '其他出入库',
-      component: Home,
-      meta: {
-        index: '4'
-      },
-      children: [
-        {
-          path: '/home/other/transfer',
-          name: '转仓单',
-          component: Transfer,
-          meta: {
-            index: '4-1'
-          }
-        },
-        {
-          path: '/home/other/inDelivery',
-          name: '内部领用单',
-          component: InDelivery,
-          meta: {
-            index: '4-2'
-          }
-        },
-        {
-          path: '/home/other/inReceipt',
-          name: '内部反退单',
-          component: InReceipt,
-          meta: {
-            index: '4-3'
-          }
-        },
-        {
-          path: '/home/other/inReceipt',
-          name: '其他入库单',
-          component: OtherReceipt,
-          meta: {
-            index: '4-4'
-          }
-        },
-        {
-          path: '/home/other/otherDelivery',
-          name: '其他出库单',
-          component: OtherDelivery,
-          meta: {
-            index: '4-5'
-          }
-        }
-      ]
-    },
+    // {
+    //   path: '/home',
+    //   name: '其他出入库',
+    //   component: Home,
+    //   meta: {
+    //     index: '4'
+    //   },
+    //   children: [
+    //     {
+    //       path: '/home/other/transfer',
+    //       name: '转仓单',
+    //       component: Transfer,
+    //       meta: {
+    //         index: '4-1'
+    //       }
+    //     },
+    //     {
+    //       path: '/home/other/inDelivery',
+    //       name: '内部领用单',
+    //       component: InDelivery,
+    //       meta: {
+    //         index: '4-2'
+    //       }
+    //     },
+    //     {
+    //       path: '/home/other/inReceipt',
+    //       name: '内部反退单',
+    //       component: InReceipt,
+    //       meta: {
+    //         index: '4-3'
+    //       }
+    //     },
+    //     {
+    //       path: '/home/other/inReceipt',
+    //       name: '其他入库单',
+    //       component: OtherReceipt,
+    //       meta: {
+    //         index: '4-4'
+    //       }
+    //     },
+    //     {
+    //       path: '/home/other/otherDelivery',
+    //       name: '其他出库单',
+    //       component: OtherDelivery,
+    //       meta: {
+    //         index: '4-5'
+    //       }
+    //     }
+    //   ]
+    // },
     {
       path: '/home',
       name: '库存管理',

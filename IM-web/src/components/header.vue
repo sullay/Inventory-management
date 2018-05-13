@@ -5,11 +5,11 @@
   </el-row>
 </template>
 <script>
-import {postRequest} from '../utils/axios'
+import axios from 'axios'
 export default {
   methods: {
     logout () {
-      postRequest('http://localhost:4001/logout', '')
+      axios.post('http://localhost:4001/logout')
         .then(resp => {
           window.location.href = '/'
         })
@@ -18,7 +18,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .button {
     margin-top: 10px;
   }

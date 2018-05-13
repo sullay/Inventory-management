@@ -22,4 +22,6 @@ public interface GoodsClient {
 	public Msg findAll(@RequestParam("page")int page,@RequestParam("size")int size);
 	@RequestMapping(value="/all_NoPage",method=RequestMethod.GET)
 	public Msg findAll();
+	@RequestMapping(value="/search",method=RequestMethod.GET)
+	public Msg search(@RequestParam("page")int page,@RequestParam("size")int size,@RequestParam(name="goodsName",required=false)String goodsName,@RequestParam(name="goodsTypeId",required=false)int goodsTypeId,@RequestParam(name="brand",required=false)String brand);
 }

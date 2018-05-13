@@ -54,7 +54,35 @@
       <el-button type="primary" @click="edit_confirm" v-else>确 定</el-button>
     </span>
     </el-dialog>
-    <el-button type="success" @click="add"><i class="fa fa-plus"></i>新增</el-button>
+    
+    <el-form>
+    <el-form-item>
+      <el-row>
+        <el-col :span="3">
+        <el-button type="success" @click="add"><i class="fa fa-plus"></i>新增</el-button>
+        </el-col>
+        <el-col :span="5" :offset="5">
+          <el-input placeholder="请输入商品名称" v-model="goods.name"><template slot="prepend">商品名称</template></el-input>
+        </el-col>
+        <el-col :span="4">
+          <el-select v-model="goods.goodsType.id" filterable placeholder="请选择商品类型" clearable>
+            <el-option
+              v-for="item in goodsTypes"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id">
+            </el-option>
+          </el-select>
+        </el-col>
+        <el-col :span="4">
+          <el-input placeholder="请输入品牌" v-model="goods.brand"><template slot="prepend">品牌</template></el-input>
+        </el-col>
+        <el-col :span="3">
+          <el-button type="primary" @click="search">搜索</el-button>
+        </el-col>
+      </el-row>
+    </el-form-item>
+    </el-form>
     <el-table
     :data="allGoods"
     border
@@ -138,6 +166,32 @@ export default {
       this.data.page = 0
       this.jump()
     },
+    search () {
+      if (this.goods.name !== '') {
+        this.data.goodsName = this.goods.name
+      } else {
+        this.data.goodsName = ''
+      }
+      if (this.goods.goodsType.id !== '') {
+        this.data.goodsTypeId = this.goods.goodsType.id
+      } else {
+        this.data.goodsTypeId = 0
+      }
+      if (this.goods.brand !== '') {
+        this.data.brand = this.goods.brand
+      } else {
+        this.data.brand = ''
+      }
+      getRequest('/goodsAPI/search', this.data)
+        .then(resp => {
+          this.allGoods = resp.data.extend.pageInfo.content
+          this.totalElements = resp.data.extend.pageInfo.totalElements
+        })
+        .catch(error => {
+          console.log(error)
+          this.$message.error('数据请求失败')
+        })
+    },
     jump () {
       getRequest('/goodsAPI/all', this.data)
         .then(resp => {
@@ -171,6 +225,7 @@ export default {
     },
     add () {
       this.isAdd = true
+      this.goods = {id: 0, code: '', name: '', specification: '', goodsType: {id: '', code: '', name: '', codingPrefix: ''}, unit: {id: '', code: '', description: ''}, brand: '', price: '', max: null, min: null}
       this.dialogVisible = true
     },
     close () {

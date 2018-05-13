@@ -1,6 +1,86 @@
 <template>
   <div>
     <el-dialog
+    :visible.sync="deliveryDialogVisible"
+    width="50%"
+    :before-close="Dclose" title="采购退货单">
+      <el-form :model="purchaseDelivery" label-width="100px" size="small">
+        <el-row>
+          <el-col :span="12">
+          <el-form-item label="采购订单编号:">
+            <el-input placeholder="请输入采购订单编号" v-model="purchaseDelivery.purchaseOrder.code" disabled>
+              <template slot="prepend">{{this.prefix}}</template>
+            </el-input>
+          </el-form-item>
+          </el-col>
+          <el-col :span="12">
+          <el-form-item label="采购退货单编号:">
+            <el-input placeholder="请输入采购退货单编号" v-model="purchaseDelivery.code" autofocus>
+              <template slot="prepend">{{this.deliveryPrefix}}</template>
+            </el-input>
+          </el-form-item>
+          </el-col>
+        </el-row>
+        <div v-for="purchaseInfo in purchaseDelivery.purchaseOrder.purchaseInfos" :key="purchaseInfo.id">
+          <el-form-item label="商品信息:">
+            <el-row>
+            <el-col :span="12">
+              <el-select v-model="purchaseInfo.goods.id" filterable placeholder="请选择商品" disabled>
+                <el-option
+                  v-for="item in goodsAll"
+                  :key="item.id"
+                  :label="item.code+'-'+item.name"
+                  :value="item.id">
+                </el-option>
+              </el-select>
+            </el-col>
+            <el-col :span="12">
+              <el-date-picker
+                v-model="purchaseInfo.date"
+                type="date"
+                placeholder="选择到货日期" disabled>
+              </el-date-picker>
+            </el-col>
+            </el-row>
+            <el-row>
+            <el-col :span="8">
+              <el-input placeholder="请输入订单数量" v-model.number="purchaseInfo.number" disabled>
+                <template slot="prepend">订单数量</template>
+              </el-input>
+            </el-col>
+            <el-col :span="8" :offset="4">
+              <el-input placeholder="请输入到货数量" v-model.number="purchaseInfo.arrivals" disabled>
+                <template slot="prepend">到货数量</template>
+              </el-input>
+            </el-col>
+            <el-col :span="8">
+              <el-select v-model="purchaseInfo.stock" filterable placeholder="请选择仓库" @click.native="getWarehouse(purchaseInfo.goods.id)">
+                <el-option
+                  v-for="item in stocks"
+                  :key="item.id"
+                  :label="item.warehouse.code+'-'+item.warehouse.name+':'+item.number"
+                  :value="item.id">
+                </el-option>
+              </el-select>
+            </el-col>
+            <el-col :span="8" :offset="4">
+              <el-input placeholder="请输入退货数量" v-model.number="purchaseInfo.num">
+                <template slot="prepend">退货数量</template>
+              </el-input>
+            </el-col>
+            </el-row>
+          </el-form-item>
+        </div>
+        <el-form-item label="备注">
+          <el-input placeholder="请输入备注" v-model="purchaseDelivery.extend"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer">
+        <el-button @click="Dclose">取 消</el-button>
+        <el-button type="primary" @click="delivery_confirm">确 定</el-button>
+      </span>
+    </el-dialog>
+    <el-dialog
     :visible.sync="receiptDialogVisible"
     width="50%"
     :before-close="Rclose" title="采购入库单">
@@ -208,6 +288,7 @@
       <template slot-scope="scope">
         <el-button-group>
           <el-button  type="text" size="small" @click="receipt(scope)">入库</el-button>
+          <el-button  type="text" size="small" @click="delivery(scope)">退货</el-button>
           <el-button  type="text" size="small" @click="edit(scope)">修改</el-button>
           <el-button  type="text" size="small" @click="del(scope)">删除</el-button>
         </el-button-group>
@@ -228,6 +309,7 @@ import {getRequest, postRequest, deleteRequest, putRequest} from '../../utils/ax
 export default {
   data () {
     return {
+      deliveryDialogVisible: false,
       receiptDialogVisible: false,
       dialogVisible: false,
       // 全部数量
@@ -240,14 +322,30 @@ export default {
       isAdd: true,
       prefix: '',
       receiptPrefix: '',
+      deliveryPrefix: '',
       goodsAll: [],
       warehouses: [],
+      stocks: [],
       goods: {id: 0, code: '', name: '', specification: '', goodsType: {id: '', code: '', name: '', codingPrefix: ''}, unit: {id: '', code: '', description: ''}, brand: '', price: '', max: null, min: null},
       purchaseReceipt: {
         purchaseOrder: {
           purchaseInfos: []
         },
         waters: []
+      },
+      purchaseDelivery: {
+        purchaseOrder: {
+          purchaseInfos: []
+        },
+        waters: [],
+        receivable: {id: 0,
+          code: '',
+          amountReceived: 0,
+          amount: 0,
+          state: '',
+          extend: '',
+          date: 0,
+          dealer: ''}
       }
     }
   },
@@ -282,6 +380,14 @@ export default {
           console.log(error)
           this.$message.error('数据请求失败')
         })
+      getRequest('/documentsAPI/', {name: '采购退货单'})
+        .then(resp => {
+          this.deliveryPrefix = resp.data.extend.pageInfo.prefix
+        })
+        .catch(error => {
+          console.log(error)
+          this.$message.error('数据请求失败')
+        })
       getRequest('/goodsAPI/all_NoPage')
         .then(resp => {
           this.goodsAll = resp.data.extend.pageInfo
@@ -293,6 +399,16 @@ export default {
       getRequest('/warehouseAPI/all_NoPage')
         .then(resp => {
           this.warehouses = resp.data.extend.pageInfo
+        })
+        .catch(error => {
+          console.log(error)
+          this.$message.error('数据请求失败')
+        })
+    },
+    getWarehouse (goodId) {
+      getRequest('/stockAPI/listByGoods', {gid: goodId})
+        .then(resp => {
+          this.stocks = resp.data.extend.pageInfo
         })
         .catch(error => {
           console.log(error)
@@ -314,6 +430,10 @@ export default {
     },
     Rclose () {
       this.receiptDialogVisible = false
+      this.jump()
+    },
+    Dclose () {
+      this.deliveryDialogVisible = false
       this.jump()
     },
     confirm () {
@@ -396,7 +516,6 @@ export default {
       })
       putRequest('/purchaseOrderAPI/', this.purchaseReceipt.purchaseOrder)
         .then(resp => {
-          console.log(this.purchaseReceipt)
           postRequest('/purchaseReceiptAPI/', this.purchaseReceipt)
             .then(resp => {
               this.jump()
@@ -405,6 +524,58 @@ export default {
             .catch(error => {
               console.log(error)
               this.$message.error('创建采购入库单失败,请检查单号是否重复')
+            })
+        })
+        .catch(error => {
+          console.log(error)
+          this.$message.error('修改采购订单失败，请检查单号是否重复')
+        })
+    },
+    delivery_confirm () {
+      this.purchaseDelivery.receivable = {
+        id: '',
+        code: this.deliveryPrefix + this.purchaseDelivery.code,
+        amountReceived: 0,
+        amount: 0,
+        state: 'INCOMPLETE',
+        extend: this.purchaseDelivery.extend,
+        date: new Date(),
+        dealer: this.purchaseDelivery.purchaseOrder.supplier
+      }
+      this.purchaseDelivery.date = new Date()
+      this.purchaseDelivery.waters = []
+      this.purchaseDelivery.purchaseOrder.purchaseInfos.forEach(purchaseInfo => {
+        this.purchaseDelivery.receivable.amount += purchaseInfo.price * purchaseInfo.num
+        purchaseInfo.arrivals -= purchaseInfo.num
+        this.purchaseDelivery.waters.push({
+          documentName: '采购退货单',
+          documentCode: this.deliveryPrefix + this.purchaseDelivery.code,
+          date: this.purchaseDelivery.date,
+          receiptNum: 0,
+          deliveryNum: purchaseInfo.num,
+          stock: {
+            id: purchaseInfo.stock,
+            goods: {id: 0, code: '', name: '', specification: '', goodsType: {id: '', code: '', name: '', codingPrefix: ''}, unit: {id: '', code: '', description: ''}, brand: '', price: '', max: null, min: null},
+            warehouse: {id: 0, code: '', name: '', place: '', extend: ''}
+          }
+        })
+      })
+      this.purchaseDelivery.purchaseOrder.state = 'COMPLETE'
+      this.purchaseDelivery.purchaseOrder.purchaseInfos.forEach(purchaseInfo => {
+        if (purchaseInfo.arrivals < purchaseInfo.number) {
+          this.purchaseDelivery.purchaseOrder.state = 'INCOMPLETE'
+        }
+      })
+      putRequest('/purchaseOrderAPI/', this.purchaseDelivery.purchaseOrder)
+        .then(resp => {
+          postRequest('/purchaseDeliveryAPI/', this.purchaseDelivery)
+            .then(resp => {
+              this.jump()
+              this.deliveryDialogVisible = false
+            })
+            .catch(error => {
+              console.log(error)
+              this.$message.error('创建采购退货单失败,请检查单号是否重复')
             })
         })
         .catch(error => {
@@ -445,6 +616,10 @@ export default {
     receipt (scope) {
       this.purchaseReceipt.purchaseOrder = scope.row
       this.receiptDialogVisible = true
+    },
+    delivery (scope) {
+      this.purchaseDelivery.purchaseOrder = scope.row
+      this.deliveryDialogVisible = true
     },
     formatter (row, column, cellValue) {
       return formatDate(cellValue)

@@ -36,4 +36,8 @@ public class GoodsController {
 	public Msg findAll() {
 		return goodsClient.findAll();
 	}
+	@RequestMapping(value="/search",method=RequestMethod.GET)
+	public Msg search(@RequestParam("page")int page,@RequestParam("size")int size,@RequestParam(name="goodsName",required=false)String goodsName,@RequestParam(name="goodsTypeId",required=false)int goodsTypeId,@RequestParam(name="brand",required=false)String brand) {
+		return goodsClient.search(page, size, goodsName, goodsTypeId, brand);
+	}
 }

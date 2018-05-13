@@ -33,6 +33,10 @@ public class StockController {
 	public Msg findAll(@RequestParam("page")int page,@RequestParam("size")int size) {
 		return Msg.success().add("pageInfo", stockService.findAll(page, size));
 	}
+	@RequestMapping(value="/listByGoods",method=RequestMethod.GET)
+	public Msg findByGoodsId(@RequestParam("gid")int gid){
+		return Msg.success().add("pageInfo", stockService.findByGoodsId(gid));
+	}
 	@RequestMapping(value="/",method=RequestMethod.GET)
 	public Msg findByGoodsIdAndWarehouseId(@RequestParam("gid")int gid, @RequestParam("wid")int wid) {
 		return Msg.success().add("pageInfo", stockService.findByGoodsIdAndWarehouseId(gid, wid));

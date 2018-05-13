@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -32,7 +33,7 @@ public class SaleInfo {
 	//备注
 	private String extend;
 	//销售订单
-	@ManyToOne(cascade= {CascadeType.ALL})
+	@ManyToOne(cascade= {CascadeType.MERGE,CascadeType.REFRESH},fetch=FetchType.EAGER)
 	@JoinColumn(name="Sid")
 	private SaleOrder saleOrder;
 	public Integer getId() {

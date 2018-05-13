@@ -8,7 +8,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sullay.model.Msg;
+import com.sullay.model.Stock;
+import com.sullay.model.Water;
+import com.sullay.model.sale.SaleOrder;
 import com.sullay.model.sale.SaleReceipt;
+import com.sullay.service.StockService;
+import com.sullay.service.sale.SaleOrderService;
 import com.sullay.service.sale.SaleReceiptService;
 
 @RestController
@@ -16,9 +21,26 @@ import com.sullay.service.sale.SaleReceiptService;
 public class SaleReceiptController {
 	@Autowired
 	SaleReceiptService saleReceiptService;
+	@Autowired
+	SaleOrderService saleOrderService;
+	@Autowired
+	StockService stockService;
 	@RequestMapping(value="/",method=RequestMethod.POST)
 	public void create(@RequestBody SaleReceipt saleReceipt) {
-		saleReceiptService.create(saleReceipt);	
+		SaleOrder SaleOrder = saleOrderService.findById(saleReceipt.getSaleOrder().getId());
+		saleReceipt.setSaleOrder(SaleOrder);
+		for (Water water : saleReceipt.getWaters()) {
+			Stock stock = stockService.findByGoodsIdAndWarehouseId(water.getStock().getGoods().getId(), water.getStock().getWarehouse().getId());
+			if(stock==null) {
+				water.getStock().setNumber(water.getReceiptNum());
+				stockService.create(water.getStock());
+				stock = stockService.findByGoodsIdAndWarehouseId(water.getStock().getGoods().getId(), water.getStock().getWarehouse().getId());
+			}else {
+				stock.setNumber(stock.getNumber()+water.getReceiptNum());
+			}
+			water.setStock(stock);
+		}
+		saleReceiptService.create(saleReceipt);
 	}
 	@RequestMapping(value="/",method=RequestMethod.DELETE)
 	public void detele(@RequestBody SaleReceipt saleReceipt) {
